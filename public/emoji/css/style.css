@@ -1,0 +1,74 @@
+.emotion .input { width: 100%; }
+.emotion .input p { display: none; }
+pre {
+  background: #EEE;
+  padding: 5px;
+  width: 290px;
+}
+
+.emotion {
+  position: relative;
+  display: flex
+}
+
+.emotion-Icon {
+  position: relative;
+  right: 20px;
+  top: 5px;
+  cursor: pointer;
+}
+
+.ShowImotion { display: flex !important; }
+
+.emotion-area {
+  position: absolute;
+  box-shadow: 1px 1px 1px 1px #333;
+  bottom: 130%;
+  display: none;
+  right: 0;
+  width: 300px;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  height: 200px;    background: #fff;
+}
+
+.top {
+  top: 130%;
+  bottom: auto
+}
+
+.emotion-area img {
+  margin: 4px;
+  cursor: pointer;
+}
+
+/****** end general ******/
+
+
+#canvas {
+  border: 1px solid red;
+  margin: auto
+}
+
+
+/**** start madia Query ****/
+
+@media only screen and (max-width : 1200px) {
+}
+
+    /* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+}
+
+    /* Small Devices, Tablets */
+ @media only screen and (max-width : 768px) {
+}
+
+    /* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+}
+
+/* Custom, iPhone Retina */ 
+
+@media only screen and (max-width : 320px) {
+}

@@ -1,0 +1,2 @@
+ <link href="{{asset('resources/assets/gentelella/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('resources/assets/gentelella/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.css')}}" rel="stylesheet" type="text/css" />
