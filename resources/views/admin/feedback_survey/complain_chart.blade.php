@@ -205,7 +205,7 @@ Message
                                 $late  = [];
                                 $year  = array();
                                 $complain1   = [];
-                                if (count($feedback_complain[0]) > 0 && count($feedback_complain[1]) > 0 && count($feedback_complain[2]) > 0 && count($feedback_complain[3]) > 0) {
+                                if (count($feedback_complain[0]) > 0 || count($feedback_complain[1]) > 0 || count($feedback_complain[2]) > 0 || count($feedback_complain[3]) > 0) {
                                     $chart_bar = array();
 
                                     $new_ans_count = 0;

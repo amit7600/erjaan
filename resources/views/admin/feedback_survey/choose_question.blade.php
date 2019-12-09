@@ -43,7 +43,7 @@ Message
 @stop
 {{-- Page content --}}
 @section('inner_body')
-@if($question->question_sequence == 0)
+@if(isset($question->question_sequence) && $question->question_sequence == 0)
 <script type="text/javascript">
     $('document').ready(function(){
         $('.show_display_option').hide();
@@ -183,8 +183,7 @@ Message
                         @if ($errors->has('high_rating_name'))
                         <div style="color: red;">{{ $errors->first('high_rating_name') }}</div>
                         @endif
-                        {!! Form::text('high_rating_name', null,['class' => 'form-control','placeholder'=> 'High rating
-                        name']) !!}
+                        {!! Form::text('high_rating_name', null,['class' => 'form-control','placeholder'=> __('message.high_rating_name')]) !!}
                     </div>
                 </div>
 
@@ -196,8 +195,7 @@ Message
                         @if ($errors->has('low_rating_name'))
                         <div style="color: red;">{{ $errors->first('low_rating_name') }}</div>
                         @endif
-                        {!! Form::text('low_rating_name', null,['class' => 'form-control','placeholder'=> 'Low rating
-                        name']) !!}
+                        {!! Form::text('low_rating_name', null,['class' => 'form-control','placeholder'=> __('message.low_rating_name')]) !!}
                     </div>
                 </div>
 
@@ -243,7 +241,7 @@ Message
                         @if ($errors->has('low_rating_name'))
                         <div style="color: red;">{{ $errors->first('display_option') }}</div>
                         @endif
-                        {{ Form::select('display_option', ['0' => __('message.simple_view'),'1'=>__('message.cirve_view')],null, array('id' => 'display_option', 'class' => 'select2_group form-control')) }}
+                        {{ Form::select('display_option', ['0' => __('message.simple_view'),'1'=> __('message.cirve_view'),'2' => __('message.zig_zag_view')],null, array('id' => 'display_option', 'class' => 'select2_group form-control')) }}
                         <span class="span-right-input-icon">
                             <i class="ul-form__icon i-Arrow-Down"></i>
                         </span>

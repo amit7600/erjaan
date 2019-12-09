@@ -115,7 +115,7 @@ $right_content ='';
     <script src="{{mix('assets/js/common-bundle-script.js')}}"></script>
     @yield('page-js')
     <script src="{{asset('assets/js/es5/script.min.js')}}"></script>
-    <script src="{{asset('assets/js/es5/sidebar.large.script.min.js')}}"></script>
+    <script src="{{asset('assets/js/es5/sidebar.large.script.js')}}"></script>
     <script src="{{asset('assets/js/es5/customizer.script.min.js')}}"></script>
 
     <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>

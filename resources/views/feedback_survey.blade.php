@@ -51,17 +51,17 @@
           <img src="{{$base_path}}{{$selected_feedback_question->question_form_logo}}"
           style="height:150px;margin-top: 10px;" alt="logo">
         @else
-        <img src="{{asset('admin_css/assets/front/img/logo.jpg')}}" alt="logo">
+        <!--<img src="{{asset('admin_css/assets/front/img/logo.jpg')}}" alt="logo">-->
         @endif
         @if( isset($selected_feedback_question) && $selected_feedback_question->fullscreen_button == 1)
         <div class="" style="position: fixed; top: 20px; right: 10px;">
           <button onclick="openFullscreen();" id="fullsrc"
             style="background: #fff;border: none;border-radius: 5px;padding: 6px; cursor: pointer;"><img
-              src="{{asset('resources/assets/front/img/full-screen.png')}}" alt="Full Screen"
+              src="{{asset('/admin_css/assets/front/img/full-screen.png')}}" alt="Full Screen"
               style="width: 30px;"></button>
           <button onclick="closeFullscreen();" id="exitsrc"
             style="background: #fff;border: none;border-radius: 5px;padding: 6px; cursor: pointer;"><img
-              src="{{asset('resources/assets/front/img/FullscreenExit.png')}}" alt="Zoom Out"
+              src="{{asset('/admin_css/assets/front/img/FullscreenExit.png')}}" alt="Zoom Out"
               style="width: 30px;"></button>
         </div>
         @endif
@@ -164,10 +164,13 @@
             <!-- this section is for show emoji or star -->
             @if($question[$i]->emoji_rating == 'emoji')
             <div class="panel-body">
+              
               @if($selected_feedback_question->display_option == 1 && $selected_feedback_question->question_sequence == 1)
-              <div class="images single_line_curve  {{$emoji_and_rating_size}}">
-              @else  
-              <div class="images without_curve {{$emoji_and_rating_size}}">
+                <div class="images single_line_curve  {{$emoji_and_rating_size}}">
+              @elseif($selected_feedback_question->display_option == 2 && $selected_feedback_question->question_sequence == 1)  
+                <div class="images zig_zag {{$emoji_and_rating_size}}">
+              @else
+                <div class="images without_curve {{$emoji_and_rating_size}}">  
               @endif  
                 <ul>
                   <li>
@@ -269,7 +272,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">{{__('message.thank')}} {{__('message.you')}}</h4>
+          <h4 class="modal-title">{{__('message.thank_you_message')}}</h4>
           <button type="button" class="close" data-dismiss="modal" id="close_btn" aria-label="Close"><span
               aria-hidden="true">&times;</span></button>
         </div>
@@ -668,21 +671,35 @@ function closeFullscreen() {
   <style type="text/css" media="screen">
     .inner_body { height: auto; display: block; width: 100%;}
     .only_question_1 .logo-img {padding: 10px 0;}
-    /*.only_question_1 .innner_question_ans .images ul li {width:18% }*/
-    .only_question_1 .innner_question_ans .images.large ul li img {width: 90%;}
-    .only_question_1 .innner_question_ans .images.medium ul li img {width: 75%;}
-    .only_question_1 .innner_question_ans .images.small ul li img {width: 60%;}
-    .only_question_1 .innner_question_ans .images.single_line_curve ul li {position: relative; margin: 0px;}
-    .only_question_1 .innner_question_ans .images.single_line_curve ul li:first-child a { position: relative; top: -200px;left: 0;}
-    .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(2) a { position: relative; top: -20px;left: 0;}
-    .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(3) a { position: relative; top: 50px;left: 0;}
-    .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(4) a { position: relative; top: -20px;left: 0;}
-    .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(5) a { position: relative; top: -200px;left: 0;}
-    .only_question_1 .innner_question_ans .images.single_line_curve {height: 400px;}
-    .innner_question_ans button {position: relative; bottom: 0px;}
+    .only_question_1 .innner_question_ans .images.single_line_curve ul li {width: 19%;position: relative; margin: 0px;}
+    .only_question_1 .innner_question_ans .images.single_line_curve ul li:first-child a,
+    .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(5) a  { position: relative; top: -50px;left: 0;}
+    .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(2) a,
+    .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(4) a  { position: relative; top: 100px;left: 0;}
+    .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(3) a { position: relative; top: 220px;left: 0;}
+    /* .only_question_1 .innner_question_ans .images.single_line_curve {height: 400px;} */
+    .only_question_1 .innner_question_ans .images.single_line_curve.large ul li img {width:100%;}
+    .only_question_1 .innner_question_ans .images.single_line_curve.medium ul li img {width: 75%;}
+    .only_question_1 .innner_question_ans .images.single_line_curve.small ul li img {width: 60%;}
+    .innner_question_ans button {position: fixed; top: 20px; right: 70px;}
 
-    /*.only_question_1 .innner_question_ans .images.without_curve ul li {width: 13%;position: relative;}*/
-  
+    .only_question_1 .innner_question_ans .images.zig_zag ul li {width: 19%;position: relative; margin: 0px;}
+    .only_question_1 .innner_question_ans .images.zig_zag  ul li:first-child a,
+    .only_question_1 .innner_question_ans .images.zig_zag  ul li:nth-child(5) a  { position: relative; top: 200px;left: 0;}
+    .only_question_1 .innner_question_ans .images.zig_zag  ul li:nth-child(2) a,
+    .only_question_1 .innner_question_ans .images.zig_zag  ul li:nth-child(4) a  { position: relative; top: 0px;left: 0;}
+    .only_question_1 .innner_question_ans .images.zig_zag  ul li:nth-child(3) a { position: relative; top: 200px;left: 0;}
+    .only_question_1 .innner_question_ans .images.zig_zag .large ul li img {width:100%;}
+    .only_question_1 .innner_question_ans .images.zig_zag .medium ul li img {width:75%;}
+    .only_question_1 .innner_question_ans .images.zig_zag .small ul li img {width: 60%;}
+    .innner_question_ans button {position: fixed; top: 20px; right: 70px;}
+
+    .only_question_1 .innner_question_ans .images.without_curve ul li {width: 18%;position: relative;}
+    .only_question_1 .innner_question_ans .images.without_curve.large ul li img {width: 90%;}
+    .only_question_1 .innner_question_ans .images.without_curve.medium ul li img {width: 80%;}
+    .only_question_1 .innner_question_ans .images.without_curve.small ul li img {width: 70%;}
+    .only_question_1 .innner_question_ans .images ul li span { font-size: 30px;}
+
     .overlay_img {position: fixed;height: 100vh;top: 0;z-index: 1;width: 100%;}
     .overlay_img + .inner_body {position: relative;top: 0;z-index: 1050;}
     .model_question.complain_form input[type=radio] {}
@@ -699,86 +716,113 @@ function closeFullscreen() {
     .gl-star-rating-stars.s40 + .gl-star-rating-text {position: absolute;left: 19%;top: 82%;background: #ffb900;color: #000;font-size: 20px;padding: 5px 16px;height: auto;}
     .gl-star-rating-stars.s50 + .gl-star-rating-text {position: absolute;left: -4%;top: 100%;background: #ffb900;color: #000;font-size: 20px;padding: 5px 16px;height: auto;}
     .gl-star-rating-stars span:before {font-size: 20px;position: absolute;top: 100%;background: transparent;color: #fff;left: 20%;padding: 0 12px;}
-    .gl-star-rating-stars span:first-child:before {content: '{{$selected_feedback_question->low_rating_name }}';}
-    .gl-star-rating-stars span:nth-child(5):before {content: '{{$selected_feedback_question->high_rating_name }}';}
+    .gl-star-rating-stars span:first-child:before {content: 'Low';}
+    .gl-star-rating-stars span:nth-child(5):before {content: 'High';}
     .large .gl-star-rating-stars span {width: 125px !important;height: 125px !important;background-size: 100% !important;}
     .medium .gl-star-rating-stars span {width: 100px !important;height: 100px !important;background-size: 100% !important;}
     .small .gl-star-rating-stars span {width: 75px !important;height: 75px !important;background-size: 100% !important;}
-    .innner_question_ans { padding-bottom: 0px; }
+    @media (max-width: 1787px) 
+    {
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(3) a {top: 190px;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(3) a,
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:first-child a, 
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(5) a {top: 190px;}
+    }
     @media (max-width: 1600px) 
     {
-      .only_question_1 .innner_question_ans .images.single_line_curve {height: 365px;margin-top: -22px;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(2) a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(4) a {top: 70px;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(3) a { top: 140px;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(3) a,
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:first-child a, 
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(5) a  { top: 140px;}
     }
     @media (max-width: 1366px) 
     {
-      .only_question_1 .innner_question_ans .images ul li {width:16% }
-      .only_question_1 .innner_question_ans .images.single_line_curve {height: 260px;margin-top: -22px;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:first-child a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(5) a {top: -20px;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(3) a { top: 160px;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(3) a,
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:first-child a, 
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(5) a { top: 160px;}
+    }
+    @media (max-width: 1152px) 
+    {
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(2) a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(4) a {top: 110px;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(3) a { top: 220px;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(3) a,
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:first-child a, 
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(5) a { top: 220px;}
     }
     @media (max-width: 1028px) 
     {
-      .inner_bg {width: 100%;}
-      .only_question_1 .innner_question_ans .images.single_line_curve {height: 275px; margin-top: 0;}
-      /*.only_question_1 .innner_question_ans .images.without_curve ul li {width: 17%;}*/
-
+        .inner_bg {width: 100%;}
+        .only_question_1 .innner_question_ans .images.without_curve ul li {width: 17%;}
     }
     @media (max-width: 800px)
     {
-      .large .gl-star-rating-stars span {width: 100px !important;height: 100px !important;}
-      .medium .gl-star-rating-stars span {width: 75px !important;height: 75px !important;}
-      .small .gl-star-rating-stars span {width: 50px !important;height: 50px !important;}
-      .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(5) a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:first-child a {position: relative;top: -70px;left: 0;}
-      .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(2) a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(4) a {position: relative; top: 20px; left: 0;}
-      .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(3) a {position: relative; top: 85px; left: 0;}
-      .only_question_1 .innner_question_ans .images.single_line_curve { height: 230px; margin-top: 0;}
-      .only_question_1 .innner_question_ans .images.single_line_curve.large ul li img {width: 100%;}
+        .large .gl-star-rating-stars span {width: 100px !important;height: 100px !important;}
+        .medium .gl-star-rating-stars span {width: 75px !important;height: 75px !important;}
+        .small .gl-star-rating-stars span {width: 50px !important;height: 50px !important;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(5) a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:first-child a {position: relative;top: -70px;left: 0;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(2) a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(4) a {position: relative; top: 20px; left: 0;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(3) a {position: relative; top: 85px; left: 0;}
+        .only_question_1 .innner_question_ans .images.single_line_curve.large ul li img {width: 100%;}
+        .only_question_1 .innner_question_ans .images ul li span {font-size: 25px;}
+        .only_question_1 .innner_question_ans .images.zig_zag.large ul li img {width: 100%;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(3) a,
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:first-child a, 
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(5) a  {top: 200px;}
     }
     @media (max-width: 767px)
     {
-      .only_question_1 .innner_question_ans .images ul li {width:16.5% }
-      /*.only_question_1 .innner_question_ans .images.without_curve ul li {width: 16.5%;}*/
-      .only_question_1 .innner_question_ans .images ul li { margin-left: 10px;}
+        .only_question_1 .innner_question_ans .images.without_curve ul li {width: 16.5%;}
+        .only_question_1 .innner_question_ans .images ul li { margin-left: 10px;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(5) a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:first-child a { position: relative;top: -20px; left: 0;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(2) a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(4) a {position: relative; top: 90px; left: 0;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(3) a { position: relative;top: 190px; left: 0;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(5) a, .only_question_1 .innner_question_ans .images.zig_zag ul li:first-child a { position: relative;top: -20px; left: 0;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(2) a, .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(4) a {position: relative; top: 90px; left: 0;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li:nth-child(3) a { position: relative;top: 190px; left: 0;}
     }
     @media (max-width: 640px) 
     {
-      .only_question_1 .innner_question_ans .images.single_line_curve { height: 200px; margin-top: 30px;}
+        /* .only_question_1 .innner_question_ans .images.single_line_curve { height: 200px; margin-top: 30px;} */
     }
     @media (max-width: 568px) 
     {
-      .large .gl-star-rating-stars span {width: 80px !important;height: 80px !important;}
-      .medium .gl-star-rating-stars span {width: 55px !important;height: 55px !important;}
-      .small .gl-star-rating-stars span {width: 30px !important;height: 30px !important;}
-      .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(5) a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:first-child a {position: relative;top: -50px;left: 0;}
-      .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(2) a, .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(4) a {position: relative; top: -10px; left: 0;}
-      .only_question_1 .innner_question_ans .images.single_line_curve ul li:nth-child(3) a {position: relative; top: 20px; left: 0;}
-      .only_question_1 .innner_question_ans .images.single_line_curve { height: 125px; margin-top: 0;}
+        .large .gl-star-rating-stars span {width: 80px !important;height: 80px !important;}
+        .medium .gl-star-rating-stars span {width: 55px !important;height: 55px !important;}
+        .small .gl-star-rating-stars span {width: 30px !important;height: 30px !important;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li {margin: 0px 6px 38px;width: 30%;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li a {top: 0px !important;}
+        .innner_question_ans button {position: relative;top: 20px;  right: auto;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li {margin: 0px 6px 38px;width: 30%;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li a {top: 0px !important;}
+        .innner_question_ans button {position: relative;top: 20px;  right: auto;}
     }
     @media (max-width: 480px)
     {
-      .large .gl-star-rating-stars span {width: 65px !important;height: 65px !important;}
-      .medium .gl-star-rating-stars span {width: 45px !important;height: 45px !important;}
-      .small .gl-star-rating-stars span {width: 45px !important;height: 45px !important;}
-      .gl-star-rating-stars span:before {font-size: 14px;left: 10%;}
-      .gl-star-rating-text {display: none;}
-      .only_question_1 .innner_question_ans .images ul li {width:16% }
-      /*.only_question_1 .innner_question_ans .images.without_curve ul li { width: 16%;}*/
+        .large .gl-star-rating-stars span {width: 65px !important;height: 65px !important;}
+        .medium .gl-star-rating-stars span {width: 45px !important;height: 45px !important;}
+        .small .gl-star-rating-stars span {width: 45px !important;height: 45px !important;}
+        .gl-star-rating-stars span:before {font-size: 14px;left: 10%;}
+        .gl-star-rating-text {display: none;}
+        .only_question_1 .innner_question_ans .images.without_curve ul li { width: 16%;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li { width: 29%;}
+        .innner_question_ans h4 {font-size: 30px !important;}
+        .only_question_1 .innner_question_ans .images ul li span {font-size: 20px;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li { width: 29%;}
     }
     @media (max-width: 360px) 
     {
-      .large .gl-star-rating-stars span {width: 45px !important;height: 45px !important;}
-      .medium .gl-star-rating-stars span {width: 45px !important;height: 45px !important;}
-      .small .gl-star-rating-stars span {width: 45px !important;height: 45px !important;}
-      .only_question_1 .innner_question_ans .images ul li {width: 15.5%;}
-      .only_question_1 .innner_question_ans .images.single_line_curve ul li {width: 18%;}
-      /*.only_question_1 .innner_question_ans .images.without_curve ul li {width: 15.5%;}*/
-      
+        .large .gl-star-rating-stars span {width: 45px !important;height: 45px !important;}
+        .medium .gl-star-rating-stars span {width: 45px !important;height: 45px !important;}
+        .small .gl-star-rating-stars span {width: 45px !important;height: 45px !important;}
+        .only_question_1 .innner_question_ans .images ul li {width: 13%;}
+        .only_question_1 .innner_question_ans .images.single_line_curve ul li {width: 28%;}
+        .only_question_1 .innner_question_ans .images.without_curve ul li {width: 15.5%;}
+        .only_question_1 .innner_question_ans .images.zig_zag ul li {width: 28%;}
+
     }
-    
-
-
-
-
-
-    
   </style>
 
 </body>

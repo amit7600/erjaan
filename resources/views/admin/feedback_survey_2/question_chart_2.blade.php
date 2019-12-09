@@ -153,12 +153,12 @@ Message
                                                 if (Session::get('select_chart_type') == 1) {
                                                     echo "selected";
                                                 }
-                                                ?> value="2">{{__('message.pie_chart')}}</option>
+                                                ?> value="1">{{__('message.pie_chart')}}</option>
                                         <option <?php
                                                 if (Session::get('select_chart_type') == 2) {
                                                     echo "selected";
                                                 }
-                                                ?> value="1">{{__('message.bar_chart')}}</option>
+                                                ?> value="2">{{__('message.bar_chart')}}</option>
                                     </select>
                                     <span class="span-right-input-icon">
                                         <i class="ul-form__icon i-Arrow-Down"></i>

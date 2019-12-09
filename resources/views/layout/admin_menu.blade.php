@@ -793,15 +793,6 @@ $role = $user->user_role;
                 <div class="triangle"></div>
             </li>
             @endif
-            @if($permission_data->view_setting == 1)
-            <li class="nav-item" data-item="settings">
-                <a class="nav-item-hold" href="#">
-                    <i class="nav-icon i-Gear-2"></i>
-                    <span class="nav-text">{{__('message.setting')}}</span>
-                </a>
-                <div class="triangle"></div>
-            </li>
-            @endif
             @if($permission_data->feedback_terminals == 1)
             <li class="nav-item" data-item="feedbackterminals_1">
                 <a class="nav-item-hold" href="#">
@@ -862,6 +853,15 @@ $role = $user->user_role;
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-File-Clipboard-File--Text"></i>
                     <span class="nav-text">{{__('message.kpis')}}</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+            @endif
+            @if($permission_data->view_setting == 1)
+            <li class="nav-item" data-item="settings">
+                <a class="nav-item-hold" href="#">
+                    <i class="nav-icon i-Gear-2"></i>
+                    <span class="nav-text">{{__('message.setting')}}</span>
                 </a>
                 <div class="triangle"></div>
             </li>

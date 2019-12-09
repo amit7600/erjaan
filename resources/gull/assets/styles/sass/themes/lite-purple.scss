@@ -50,6 +50,7 @@ $theme-colors: ( primary: $primary, secondary: $secondary, success: $success, in
 @import "../bootstrap-rtl.scss";
 @import "../globals/globals.scss";
 
+
 .dataTables_wrapper
 {
 	.dataTables_filter
@@ -104,22 +105,71 @@ $theme-colors: ( primary: $primary, secondary: $secondary, success: $success, in
     width: 8px;
   }
   
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-   
-  ::-webkit-scrollbar-thumb {
-    background: #663399; 
-    border-radius: 10px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #442067; 
-  }
-  .layout-sidebar-large 
-  {
-    .sidebar-left 
-    {
-        overflow: auto;
-    }
-  }
+::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+	background: #b7b7b7; 
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #442067; 
+}
+.layout-sidebar-large 
+{
+	.sidebar-left 
+	{
+    	overflow: auto;
+    	.navigation-left
+    	{
+    		width: 160px;
+    		.nav-item
+    		{ 
+    			.nav-item-hold 
+    			{
+    				.nav-text
+    				{
+    					font-size: 22px;
+    				}
+    			}
+    		}
+    	}
+	}
+	.sidebar-left-secondary 
+	{
+		width: 300px;
+		.childNav
+		{
+			li.nav-item
+			{
+				a
+				{
+					font-size: 20px;
+					align-items: start;
+				}
+			}
+		}
+	}
+	.sidebar-left-secondary.open {
+	    left: 160px;
+	}
+	.sidebar-overlay
+	{
+	    width: calc(100% - 120px - 300px);
+	}
+}
+body {
+	font-size: 18px;
+}
+.main-content-wrap.sidenav-open {
+    width: calc(100% - 160px);
+}
+[dir=rtl] .layout-sidebar-large .sidebar-left-secondary.open{
+	right: 160px;
+}
+.right_content #display_option + span.span-right-input-icon {left: 25px;}
+.right_content .checkbox .checkmark, .right_content .radio .checkmark { border-radius: 100px;}
+
+

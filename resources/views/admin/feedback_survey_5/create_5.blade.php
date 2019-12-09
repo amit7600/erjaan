@@ -64,7 +64,7 @@ Message
                                 <option value="">{{__('message.font_size')}}</option>
                                 <?php
                                     // for loop start
-                                        for ($i=0; $i <= 100; $i++) { 
+                                        for ($i=0; $i <= 50; $i++) { 
                                     ?>
                                 <option value="{{$i}}px">{{$i}} px</option>
                                 <?php 

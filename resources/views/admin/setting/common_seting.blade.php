@@ -76,16 +76,16 @@ Message
         @endforeach
         @endif
 
-        <!-- @if(session()->has('message.level'))
+         @if(session()->has('message.level'))
         <div class="alert alert-card alert-{{ session('message.level') }}"> 
             <strong class="text-capitalize">{!! session('message.content') !!}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        @endif -->
+        @endif
         <!--begin::form 2-->
-        <form name="auto_trigger_stting" action="{{route('save_common_setting')}}" method="post">
+        <form name="auto_trigger_stting" action="{{route('save_common_setting')}}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <!-- start SURVEY Form Layout-->
             <div class="card mb-4">
@@ -109,13 +109,13 @@ Message
                     <div class="form-group row">
                         <label for="staticEmail"
                             class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">{{__('message.do_you_want_to_show_on_behalf_of_participant')}}</label>
-                        <div class="col-lg-5 col-md-5 col-sm-5 mb-2">
-                            <label class="radio radio-primary">
+                        <div class="col-lg-5 col-md-5 col-sm-5 mb-2 d-inline-flex">
+                            <label class="radio radio-primary mr-2 mt-2">
                                 {!! Form::radio('on_behalf_of',1, $value->setting_value == 1 ? true : false ) !!}
                                 <span>{{__('message.yes')}} </span>
                                 <span class="checkmark"></span>
                             </label>
-                            <label class="radio radio-primary">
+                            <label class="radio radio-primary mr-2 mt-2">
                                 {!! Form::radio('on_behalf_of',0, $value->setting_value == 0 ? true : false ) !!}
                                 <span>{{__('message.no')}} </span>
                                 <span class="checkmark"></span>
@@ -123,9 +123,49 @@ Message
                         </div>
                     </div>
                     @endif
+                    @if($value->for_setting_type == 4)
+                    <div class="form-group row">
+                        <label for="staticEmail"
+                            class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right"><?php  $string = str_replace("_", " ", $value->setting_key);  echo ucfirst($string) ?>
+                            <span class="required">*</span></label>
+                        <div class="col-lg-5 col-md-5 col-sm-5 mb-2 d-inline-flex">
+                            <label class="radio radio-primary mr-2 mt-2">
+                                {!! Form::radio('default_language','en', $value->setting_value == 'en' ? true : false ) !!}
+                                <span>{{__('message.english')}} </span>
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio radio-primary mr-2 mt-2">
+                                {!! Form::radio('default_language','ar', $value->setting_value == 'ar' ? true : false ) !!}
+                                <span>{{__('message.arabic')}} </span>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                    @endif
                     @endforeach
-
+                    <div class="form-group row">
+                        <label for="staticEmail"
+                            class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">Choose logo
+                            <span class="required">*</span></label>
+                        <div class="col-lg-5 col-md-5 col-sm-5 mb-2 d-inline-flex">
+                            <input type="file" id="" name="choose_logo" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="staticEmail"
+                            class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">Choose background 
+                            <span class="required">*</span></label>
+                        <div class="col-lg-5 col-md-5 col-sm-5 mb-2 d-inline-flex">
+                            <input type="file" id="" name="choose_background" class="form-control">
+                        </div>
+                    </div>
                 </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header bg-transparent">
+                    <h3 class="card-title">Common Setting</h3>
+                </div>
+
             </div>
             <div class="card mb-4">
                 <div class="card-header bg-transparent">
@@ -158,6 +198,7 @@ Message
                         <div class="form-group row">
                             <?php 
                                 $selected = '';
+                                //dd($value->id);
                                 if($setting_data[4]->setting_value == $value->id){
                                     $selected = 'checked';
                                     $id = $value->id;

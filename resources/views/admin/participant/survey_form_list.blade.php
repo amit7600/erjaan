@@ -51,7 +51,7 @@ Message
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>{{__('message.participants')}} {{__('message.survey')}} {{__('message.form')}} <small>{{__('message.list')}}</small></h2>
+                        <h2>{{__('message.participants_survey_form_list')}}</h2>
                        
                         <div class="clearfix"></div>
                     </div>
@@ -67,7 +67,7 @@ Message
                                     <th class="text-center">{{__('message.last_name')}}</th>
                                     <th class="text-center">{{__('message.on_behalf')}} {{__('message.first_name')}}</th>
                                     <th class="text-center">{{__('message.on_behalf')}} {{__('message.last_name')}}</th>
-                                    <th class="text-center">{{__('message.survey')}} {{__('message.form')}}</th>
+                                    <th class="text-center">{{__('message.survey_form')}}</th>
                                     <th class="text-center">{{__('message.created_date')}}</th>
                                     <th class="text-center">{{__('message.action')}}</th>
                                 </tr>
@@ -87,13 +87,14 @@ Message
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                        {{__('message.send_survey_link_to_participant')}}
+                </h4>
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only">{{__('message.close')}}</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">
-                        {{__('message.send')}} {{__('message.survey')}} {{__('message.link')}} {{__('message.to')}} {{__('message.participant')}}
-                </h4>
+                
             </div>
             
             <!-- Modal Body -->
@@ -103,18 +104,18 @@ Message
                         <input type="hidden" name="participant_id" id="participant_id">
                         <input type="hidden" name="form_id" id="form_id">
                        <select class="select2_group form-control" id="on-behalf" name="on-behalf">
-                           <option value="0">{{__('message.select')}} {{__('message.send')}} {{__('message.to')}}</option>
-                           <option value="1">{{__('message.on_behalf')}} {{__('message.Email')}}</option>
-                           <option value="2">{{__('message.paritcipant')}} {{__('message.Email')}}</option>
+                           <option value="0">{{__('message.select_send_to')}}</option>
+                           <option value="1">{{__('message.on_behalf')}} {{__('message.email')}}</option>
+                           <option value="2">{{__('message.participant_email')}}</option>
                            
                        </select>
                     </div>
                     <div class="form-group">
                         <input type="hidden" name="email_type" id="email_type">
                        <select class="select2_group form-control" id="sending-method" name="sending-method">
-                           <option value="0">{{__('message.please')}} {{__('message.select')}} {{__('message.sending')}} {{__('message.method')}}</option>
-                           <option value="1">{{__('message.via')}} {{__('message.sms_c')}}</option>
-                           <option value="2">{{__('message.via')}} {{__('message.Email')}}</option>
+                           <option value="0">{{__('message.please_select_sending_method')}}</option>
+                           <option value="1">{{__('message.via_sms')}}</option>
+                           <option value="2">{{__('message.via_email')}}</option>
                        </select>
                     </div>
 

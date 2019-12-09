@@ -47,7 +47,7 @@
             </div>
         </div>
         {{-- RTL Spinner End--}}
-        @if ($quick_button->quick_add_button == 1)
+        @if ( $role == 0 || isset($quick_button) && $quick_button->quick_add_button == 1)
         @if($role == 0 || $permission_data->quick_add_participants_button == 1)
         <button class="btn btn-primary btn-icon m-1" id="quick_add_participant" data-toggle="modal"
             data-target="#myModal">

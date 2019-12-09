@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" dir="rtl">
+@php
+    $dir = $language == 'en' ? 'ltr' : 'rtl';
+@endphp
+<html lang="en" dir="{{$dir}}">
 
 <head>
     <meta charset="UTF-8">
@@ -25,7 +28,7 @@
 </head>
 
 <body class="text-left">
-    <div class="auth-layout-wrap login_page_card" style="background-image: url(./assets/images/photo-wide-4.jpg)">
+    <div class="auth-layout-wrap login_page_card" style="background-image: url({{$background}})">
         <a class="hiddenanchor" id="toregister"></a>
         <a class="hiddenanchor" id="tologin"></a>
         <div class="auth-content" id="wrapper">
@@ -35,7 +38,7 @@
                         <div class="col-md-12">
                             <div class="p-4">
                                 <div class="auth-logo text-center mb-4">
-                                    <img src="{{asset('admin_css/assets/logo/logo.png')}}" alt="">
+                                    <img src="{{asset($logo)}}" alt="">
                                 </div>
                                 @if(count($errors) > 0)
                                 @foreach ($errors->all() as $error)

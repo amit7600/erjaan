@@ -287,7 +287,7 @@ class Feedback3Controller extends Controller
     //this is for feedback setting menu store data.
     public function store_question(Request $request)
     {
-        //dd($request);
+        // dd($request);
         $this->validate($request, [
             'thank_you_message' => 'required',
         ]);
@@ -324,7 +324,7 @@ class Feedback3Controller extends Controller
         }
 
         if ($selected_feedback_question != null) {
-            DB::table('selected_feedback_question')->where('id', 3)->update([
+            DB::table('selected_feedback_question')->where('feedback_id', 3)->update([
                 'question_background_color' => $request->get('question_background_color'),
                 'feedback_id' => $request->get('feedback_id'),
                 'question_form_background' => $question_form_background,
@@ -344,6 +344,7 @@ class Feedback3Controller extends Controller
         } else {
             DB::table('selected_feedback_question')->insert([
                 'question_background_color' => $request->get('question_background_color'),
+                'feedback_id' => $request->get('feedback_id'),
                 'question_form_background' => $question_form_background,
                 'question_form_logo' => $question_form_logo,
                 'thank_you_message' => $request->get('thank_you_message'),

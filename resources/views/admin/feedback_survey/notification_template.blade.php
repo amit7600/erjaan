@@ -21,16 +21,14 @@ Message
 
 <div class="row">
     <div class="col-lg-12 mb-3">
-        @if(count($errors) > 0)
-        @foreach ($errors->all() as $error)
-        <div class="alert alert-card alert-danger">
-            <strong class="text-capitalize">{{$error}}</strong>
+
+        @if(session()->has('message.level'))
+        <div class="alert alert-card alert-{{ session('message.level') }}">
+            <strong class="text-capitalize">{!! session('message.content') !!}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        @break
-        @endforeach
         @endif
 
         <!-- start survey question option form -->
@@ -111,6 +109,22 @@ Message
                                 </td>
                                 <td>
                                     <a class="text-success" href="{{route('view_reason_template',4)}}"><i
+                                            class="i-Eye-Scan text-25 nav-icon font-weight-bold"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>{{__('message.complain_notification')}}</td>
+                                <td style="padding-left:33px;">
+                                    <label class="switch switch-primary mr-3">
+                                        <input type="checkbox" class="isActive"
+                                            onclick="status_change(5,<?php echo $notification_status; ?>)"
+                                            <?php echo $notification_status == 1 ? 'checked' : ''; ?>>
+                                        <span class="slider"></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <a class="text-success" href="{{route('view_complain_notification')}}"><i
                                             class="i-Eye-Scan text-25 nav-icon font-weight-bold"></i></a>
                                 </td>
                             </tr>

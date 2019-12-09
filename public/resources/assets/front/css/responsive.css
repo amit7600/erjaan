@@ -1,0 +1,112 @@
+/* media start */
+
+@media (min-width:1200px) and (max-width:1400px){
+     .container {
+        max-width: 950px;
+     }
+     .form-section {
+        max-width: 1000px;
+    }
+    .margin_top {
+        margin-top: 25px;
+   }
+   
+   .gl-star-rating-text {
+    top: 12px;
+   }
+   .submit-btn {    
+    min-width: 140px;    
+    height: 45px;    
+    padding: 7px;
+    cursor: pointer;  
+   }
+
+}
+@media only screen and (max-width:767px){
+   ul.rating-list li {    
+     margin-right: 35px;
+   }
+   .gl-star-rating-text{
+    position:absolute;
+    right:0;
+   }
+   .gl-star-rating-stars span {
+    width: 45px !important;
+    height: 45px !important;
+    background-size: 45px !important;
+    margin-right: 7px !important;
+  }
+}
+@media only screen and (max-width:600px){
+   .sep-row {
+    padding: 20px 0px;
+  }
+  .margin_top {
+    margin-top: 20px;
+  }
+  ul.rating-list li {  
+    font-size: 60px;
+    margin-right: 30px;
+  }
+  .main_heading h2 {
+    font-size: 27px;
+  }
+  .form-section {    
+    padding-bottom: 50px;
+    padding-top: 20px;
+  }
+   .gl-star-rating[data-star-rating] {   
+       padding-bottom: 30px; 
+    }
+ 
+}
+@media only screen and (max-width:480px){
+   .main_heading h2 {
+    font-size: 21px;
+	margin: 10px 0px;
+	text-align: center;
+   }
+  .green-head h3 {
+    font-size: 20px;
+    text-align: center;
+   }
+   header {
+    padding-bottom: 10px;   
+    margin-top: -8px;
+    text-align: center;
+   }
+   .green-head {  
+		padding-top: 10px;
+		padding-bottom: 15px;
+    }
+    .form-section {
+		padding-bottom: 50px;
+		padding-top: 0;
+    }
+    .form-section h4 {
+       font-size: 25px;
+       margin-bottom: 20px;
+    }
+    label.radio_heading, label.check_heading {	
+		font-size: 20px;
+    } 
+    .margin_top {
+        margin-top: 5px;
+    }
+    .text-big {  
+       height: 135px;
+    }
+    ul.rating-list li {
+		margin-right: 16px;
+		font-size: 40px;
+    }
+    .submit-btn {   
+		min-width: 140px;    
+		height: 45px;
+		font-size: 18px;    
+		padding: 7px;
+		margin-top: 20px;
+    }
+   
+  
+}

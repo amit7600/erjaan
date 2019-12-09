@@ -115,11 +115,15 @@ class UserController extends Controller {
         }else{
             $role = DB::table('tbl_user_role')->where('status',1)->first();
         }
-        
-        $this->data['menu_type'] = 1;
-        $this->data['country'] = Country::Select('id', 'name')->get();
-        $this->data['user_role'] = DB::table('tbl_user_role')->select('id','role')->where('level','>=',$role->level)->where('status',1)->get();
-        $this->data['city'] = City::Select('id', 'cityName')->get();
+        if($role){     
+            $this->data['user_role'] = DB::table('tbl_user_role')->select('id','role')->where('level','>=',$role->level)->where('status',1)->get();       
+        }else{
+            $this->data['user_role'] = DB::table('tbl_user_role')->select('id','role')->where('status',1)->get();
+        }
+            $this->data['menu_type'] = 1;
+            $this->data['country'] = Country::Select('id', 'name')->get();
+            
+            $this->data['city'] = City::Select('id', 'cityName')->get();
         return view('admin.user.index', $this->data);
     }
 
@@ -130,7 +134,6 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(RepairmanRequest $request) {
-        
         $login_user = Auth::user();
         //print_r($_POST);die;
         $user = new User;

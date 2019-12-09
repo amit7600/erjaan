@@ -4,7 +4,7 @@
             @if(!empty($survey_form_title))
             {{ $survey_form_title }}
             @else
-            {{__("message.survey")}} {{__("message.form")}}
+            {{__("message.survey_form_title")}}
             @endif
         </h3>
         <div class="text-center">

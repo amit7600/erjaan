@@ -105,6 +105,8 @@ Message
                                 <th class="text-center">{{__('message.number')}}</th>
                                 <th class="text-center">{{__('message.comments')}}</th>
                                 <th class="text-center">{{__('message.status')}}</th>
+                                <th class="text-center">{{__('message.section')}}</th>
+                                <th class="text-center">{{__('message.action')}}</th>
                                 <th class="text-center">{{__('message.modified_by')}}</th>
                                 <th class="text-center">{{__('message.created_at')}}</th>
                                 <th class="text-center">{{__('message.updated_at')}}</th>
@@ -144,6 +146,8 @@ var columns = [
     {data: 'mobile', name: 'mobile'},
     {data: 'comment', name: 'comment'},
     {data: 'status', name: 'status'},
+    {data: 'section', name: 'section'},
+    {data: 'action', name: 'action'},
     {data: 'modified_by', name: 'modified_by'},
     {data: 'created_at', name: 'created_at'},
     {data: 'updated_at', name: 'updated_at'},
@@ -195,6 +199,16 @@ var columnDefs = [
     },
     {
         "targets": 8,
+        "orderable": true,
+        "class": "text-left"
+    },
+    {
+        "targets": 9,
+        "orderable": true,
+        "class": "text-left"
+    },
+    {
+        "targets": 10,
         "orderable": true,
         "class": "text-left"
     },
@@ -312,7 +326,110 @@ var columnDefs = [
             }
         })
     }
-</script>
+    function send_notification(e,complainId){
+        console.log($('#'+e.id+' option:selected').val())
+        var role_id = $('#'+e.id+' option:selected').val();
 
+        swal({
+            title: '{{__('message.are_you_sure')}}',
+            text: "Are you sure want sent notification!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0CC27E',
+            cancelButtonColor: '#FF586B',
+            confirmButtonText: '{{__('message.yes_change')}}',
+            cancelButtonText: '{{__('message.no_cancel')}}',
+            confirmButtonClass: 'btn btn-success mr-5',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false
+        }).then(function () {
+            $(".loaderShow").show();
+            $.ajax({
+                type: "POST",
+                url : "{{route('send_complain_notification')}}",
+                data : {
+                "_token": "{{ csrf_token() }}",
+                'role_id' : role_id,
+                'complainId' : complainId
+                },
+                success: function (resp) {
+                    $(".loaderShow").hide();
+                    swal(
+                        'Changed!',
+                        resp.message,
+                        'success'
+                    )
+                },
+                error: function () {
+                    swal(
+                        'Changed!',
+                        '{{__('message.something_wrong')}}',
+                        'Error'
+                    )
+                }
+            });
+        }, function (dismiss) {
+            // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
+            if (dismiss === 'cancel') {
+                swal(
+                    'Cancelled',
+                    '{{__('message.is_safe')}}',
+                    'error'
+                )
+            }
+        })
+    }
+    function save_action_text(id){
+        var action_text = event.target.value;
+            swal({
+            title: '{{__('message.are_you_sure')}}',
+            text: "Are you sure want save action text!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0CC27E',
+            cancelButtonColor: '#FF586B',
+            confirmButtonText: '{{__('message.yes_change')}}',
+            cancelButtonText: '{{__('message.no_cancel')}}',
+            confirmButtonClass: 'btn btn-success mr-5',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false
+        }).then(function () {
+            $(".loaderShow").show();
+            $.ajax({
+                type: "POST",
+                url : "{{route('save_action_text')}}",
+                data : {
+                "_token": "{{ csrf_token() }}",
+                'id' : id,
+                'action_text' : action_text
+                },
+                success: function (resp) {
+                    $(".loaderShow").hide();
+                    swal(
+                        'Changed!',
+                        resp.message,
+                        'success'
+                    )
+                },
+                error: function () {
+                    swal(
+                        'Changed!',
+                        '{{__('message.something_wrong')}}',
+                        'Error'
+                    )
+                }
+            });
+        }, function (dismiss) {
+            // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
+            if (dismiss === 'cancel') {
+                swal(
+                    'Cancelled',
+                    '{{__('message.is_safe')}}',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 @include('datatable.dt_js')
 @stop

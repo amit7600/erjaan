@@ -650,10 +650,10 @@ $id = '';
                                 <div class="form-group row">
                                     <label for="staticEmail"
                                         class="ul-form__label col-lg-9  col-md-9 col-sm-9 col-form-label text-left pl-4">-
-                                        {{__('message.feedback_reply')}}</label>
+                                        {{__('message.feedback_responses_1')}}</label>
                                     <div class="col-lg-2  col-md-2 col-sm-2 mb-2">
                                         <label class="checkbox checkbox-primary">
-                                            {{ Form::checkbox('feedback_reply',1) }}
+                                            {{ Form::checkbox('feedback_response',1) }}
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -857,10 +857,10 @@ $id = '';
                                 <div class="form-group row">
                                     <label for="staticEmail"
                                         class="ul-form__label col-lg-9  col-md-9 col-sm-9 col-form-label text-left pl-4">-
-                                        {{__('message.feedback_reply_2')}}</label>
+                                        {{__('message.feedback_responses_2')}}</label>
                                     <div class="col-lg-2  col-md-2 col-sm-2 mb-2">
                                         <label class="checkbox checkbox-primary">
-                                            {{ Form::checkbox('feedback_reply_2',1) }}
+                                            {{ Form::checkbox('feedback_response_2',1) }}
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -1000,10 +1000,10 @@ $id = '';
                             <div class="form-group row">
                                 <label for="staticEmail"
                                     class="ul-form__label col-lg-9  col-md-9 col-sm-9 col-form-label text-left pl-4">-
-                                    {{__('message.feedback_reply_3')}}</label>
+                                    {{__('message.feedback_responses_3')}}</label>
                                 <div class="col-lg-2  col-md-2 col-sm-2 mb-2">
                                     <label class="checkbox checkbox-primary">
-                                        {{ Form::checkbox('feedback_reply_3',1) }}
+                                        {{ Form::checkbox('feedback_response_3',1) }}
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -1143,10 +1143,10 @@ $id = '';
                             <div class="form-group row">
                                 <label for="staticEmail"
                                     class="ul-form__label col-lg-9  col-md-9 col-sm-9 col-form-label text-left pl-4">-
-                                    {{__('message.feedback_reply_4')}}</label>
+                                    {{__('message.feedback_responses_4')}}</label>
                                 <div class="col-lg-2  col-md-2 col-sm-2 mb-2">
                                     <label class="checkbox checkbox-primary">
-                                        {{ Form::checkbox('feedback_reply_4',1) }}
+                                        {{ Form::checkbox('feedback_response_4',1) }}
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -1286,10 +1286,10 @@ $id = '';
                             <div class="form-group row">
                                 <label for="staticEmail"
                                     class="ul-form__label col-lg-9  col-md-9 col-sm-9 col-form-label text-left pl-4">-
-                                    {{__('message.feedback_reply_5')}}</label>
+                                    {{__('message.feedback_responses_5')}}</label>
                                 <div class="col-lg-2  col-md-2 col-sm-2 mb-2">
                                     <label class="checkbox checkbox-primary">
-                                        {{ Form::checkbox('feedback_reply_5',1) }}
+                                        {{ Form::checkbox('feedback_response_5',1) }}
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>

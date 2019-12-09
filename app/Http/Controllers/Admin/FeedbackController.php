@@ -47,7 +47,7 @@ class FeedbackController extends Controller
     public function index(Request $request)
     {
         DB::statement(DB::raw('set @rownum=0'));
-        $feedback_question = DB::table('feedback_question')->where('feedback_id','1')->select('*', DB::raw('@rownum := @rownum + 1 AS rownum'));
+        $feedback_question = DB::table('feedback_question')->where('feedback_id', '1')->select('*', DB::raw('@rownum := @rownum + 1 AS rownum'));
 
         $base_path = $this->data['base_path'];
         if (!$request->ajax()) {
@@ -235,8 +235,8 @@ class FeedbackController extends Controller
     }
     public function show_feedback_survey(Request $request)
     {
-        $question = DB::table('selected_feedback_question')->where('feedback_id','1')->first();
-        $feedback_reason = FeedbackReason::where('feedback_id','1')->get();
+        $question = DB::table('selected_feedback_question')->where('feedback_id', '1')->first();
+        $feedback_reason = FeedbackReason::where('feedback_id', '1')->get();
 
         $this->data['feedback_reason'] = $feedback_reason;
         $this->data['question'] = $question;
@@ -245,8 +245,8 @@ class FeedbackController extends Controller
         }
 
         DB::statement(DB::raw('set @rownum=0'));
-        $feedback_question = DB::table('feedback_question')->where('feedback_id','1')->select('*', DB::raw('@rownum := @rownum + 1 AS rownum'));
-        $select = DB::table('selected_feedback_question')->where('feedback_id','1')->get();
+        $feedback_question = DB::table('feedback_question')->where('feedback_id', '1')->select('*', DB::raw('@rownum := @rownum + 1 AS rownum'));
+        $select = DB::table('selected_feedback_question')->where('feedback_id', '1')->get();
         $base_path = $this->data['base_path'];
         return Datatables::of($feedback_question)
             ->addColumn('action', function ($row) {
@@ -254,7 +254,7 @@ class FeedbackController extends Controller
                 return $links;
             })
             ->addColumn('checkbox', function ($row) {
-                $select = DB::table('selected_feedback_question')->where('feedback_id','1')->first();
+                $select = DB::table('selected_feedback_question')->where('feedback_id', '1')->first();
                 $se = explode(',', $select->question_id);
                 foreach ($se as $key => $value) {
                     // dd($row->id,(int)$value);
@@ -315,13 +315,13 @@ class FeedbackController extends Controller
 
             $question_form_logo = 'uploads/question/' . $name;
         }
-        if($request->get('question_sequence') == 1){
+        if ($request->get('question_sequence') == 1) {
             $displayOption = $request->get('display_option');
-        }else {
+        } else {
             $displayOption = null;
-        }  
+        }
         if ($selected_feedback_question != null) {
-            DB::table('selected_feedback_question')->where('id', 1)->update([
+            DB::table('selected_feedback_question')->where('feedback_id', 1)->update([
                 'question_background_color' => $request->get('question_background_color'),
                 'feedback_id' => $request->get('feedback_id'),
                 'question_form_background' => $question_form_background,
@@ -334,13 +334,14 @@ class FeedbackController extends Controller
                 'label_language' => $request->get('label_language'),
                 'logo_size' => $request->get('logo_size'),
                 'emoji_and_rating_size' => $request->get('emoji_and_rating_size'),
-                'display_option' => $displayOption
+                'display_option' => $displayOption,
             ]);
             $request->session()->flash('message.level', 'success');
             $request->session()->flash('message.content', __('message.feedback') . ' ' . __('message.setting') . ' ' . __('message.updated') . ' ' . __('message.successfully'));
         } else {
             DB::table('selected_feedback_question')->insert([
                 'question_background_color' => $request->get('question_background_color'),
+                'feedback_id' => $request->get('feedback_id'),
                 'question_form_background' => $question_form_background,
                 'question_form_logo' => $question_form_logo,
                 'thank_you_message' => $request->get('thank_you_message'),
@@ -359,7 +360,7 @@ class FeedbackController extends Controller
                 'number_label_ar' => 'رقم',
                 'comment_label' => 'Comment',
                 'comment_label_ar' => 'تعليق',
-                'display_option' => $displayOption
+                'display_option' => $displayOption,
             ]);
             $request->session()->flash('message.level', 'success');
             $request->session()->flash('message.content', __('message.feedback') . ' ' . __('message.setting') . ' ' . __('message.save') . ' ' . __('message.successfully'));
@@ -416,14 +417,14 @@ class FeedbackController extends Controller
     //store survey question from front end
     public function store_survey_question(Request $request)
     {
-       
+
         try {
             DB::table('feedback_survey')->insert([
                 'rating' => $request->get('rating'),
                 'question_id' => $request->get('question_id'),
                 'user_id' => Auth::id(),
                 'user_city' => Auth::user()->city,
-                'feedback_id' => $request->get('feedback_id')
+                'feedback_id' => $request->get('feedback_id'),
             ]);
 
         } catch (Exception $e) {
@@ -464,7 +465,7 @@ class FeedbackController extends Controller
     {
 
         DB::statement(DB::raw('set @rownum=0'));
-        $question_answer = DB::table('feedback_survey')->select('*', DB::raw('@rownum := @rownum + 1 AS rownum'))->where('feedback_id','1');
+        $question_answer = DB::table('feedback_survey')->select('*', DB::raw('@rownum := @rownum + 1 AS rownum'))->where('feedback_id', '1');
         if (!$request->ajax()) {
             return view('admin.feedback_survey.show_question_answer', $this->data);
         }
@@ -557,7 +558,7 @@ class FeedbackController extends Controller
             'comment' => $request->get('comment'),
             'user_id' => Auth::id(),
             'user_city' => $user_city,
-            'feedback_id' => $request->get('feedBackRatings')
+            'feedback_id' => $request->get('feedback_id'),
         ]);
         return response()->json([
             'message' => __('message.thank') . ' ' . __('message.for') . ' ' . __('message.your') . ' ' . __('message.feedback'),
@@ -1021,8 +1022,17 @@ class FeedbackController extends Controller
         $base_path = $this->data['base_path'];
         return Datatables::of($complains)
             ->addColumn('action', function ($row) {
-                $links = "";
-                return $links;
+
+                $textarea = \Form::textarea('action_text', $row->action_text, ['class' => 'form-control', 'rows' => '2']);
+                $textarea .= 
+                '<a   style="color:green;" class="float-right"><i class="i-Yes" onClick="save_action_text('.$row->id .')"></i></a>';
+                return $textarea;
+            })
+            ->addColumn('section', function ($row) {
+                $roles = DB::table('tbl_user_role')->pluck('role', 'id');
+                
+                $section = \Form::select('section', $roles,$row->role_id, ['class' => 'form-control', 'placeholder' => 'Select role', 'id' => 'notification' . $row->id . '', 'onchange' => 'send_notification(this,' . $row->id . ')']);
+                return $section;
             })
             ->editColumn('created_at', function ($row) {
                 return date('d M, Y', strtotime($row->created_at));
@@ -1071,22 +1081,22 @@ class FeedbackController extends Controller
                 }
 
                 $links = '<select name="change_status" id="change_status_' . $row->id . '" class="form-control" onchange="changeStatus(' . $row->id . ', ' . $row->user_id . ')" style="color: white; background: ' . $color . '">
-                <option value="new" ' . $selected1 . '>'.__('message.new').'</option>
-                <option value="in_progress" ' . $selected2 . '>'.__('message.inProgress').'</option>
-                <option value="resolved" ' . $selected3 . '>'.__('message.resolved').'</option>
-                <option value="late" ' . $selected4 . '>'.__('message.late').'</option>
+                <option value="new" ' . $selected1 . '>' . __('message.new') . '</option>
+                <option value="in_progress" ' . $selected2 . '>' . __('message.inProgress') . '</option>
+                <option value="resolved" ' . $selected3 . '>' . __('message.resolved') . '</option>
+                <option value="late" ' . $selected4 . '>' . __('message.late') . '</option>
                  </select>';
                 return $links;
             })
 
-            ->rawColumns(['comment', 'action', 'status'])
+            ->rawColumns(['comment', 'action', 'status', 'section'])
             ->make(true);
     }
     public function getDataManual($extraData)
     {
         DB::statement(DB::raw('set @rownum=0'));
         $query = FeedBackComplains::select('*', DB::raw('@rownum := @rownum + 1 AS rownum'))
-                ->orderBy('id', 'DESC');
+            ->orderBy('id', 'DESC');
 
         if (!empty($extraData['status'])) {
             $query->where('status', $extraData['status']);
@@ -1241,12 +1251,12 @@ class FeedbackController extends Controller
         $question = DB::table('feedback_question')
             ->join('feedback_survey', 'feedback_survey.question_id', '=', 'feedback_question.id')
             ->select('feedback_survey.*', 'feedback_question.*')
-            ->where('feedback_question.feedback_id','2')
+            ->where('feedback_question.feedback_id', '1')
             ->get();
         $feedback_question[] = $question;
         $user = User::pluck('name', 'id');
         $location = City::pluck('cityName', 'cityName');
-        $total_question = DB::table('feedback_question')->select('*')->where('feedback_question.feedback_id','1')->get();
+        $total_question = DB::table('feedback_question')->select('*')->where('feedback_question.feedback_id', '1')->get();
         //'all_result'=>__('message.all_result'),
         $time_filter = array('today' => __('message.today'), 'yesterday' => __('message.yesterday'), 'last_14_day' => __('message.last_14_day'), 'this_week' => __('message.this_week'), 'last_week' => __('message.last_week'), 'this_month' => __('message.this_month'), 'last_month' => __('message.last_month'), 'this_year' => __('message.this_year'), 'last_year' => __('message.last_year'), 'specific_date' => __('message.specific_date'));
         // dd($time_filter);
@@ -1266,6 +1276,7 @@ class FeedbackController extends Controller
     }
     public function chart_session(Request $request)
     {
+
         if ($request->get('select_chart_by')) {
             Session::put('select_chart_by', $request->get('select_chart_by'));
         }
@@ -1294,8 +1305,8 @@ class FeedbackController extends Controller
         $feedback_question = DB::table('feedback_rating')
             ->join('users', 'users.id', '=', 'feedback_rating.user_id')
             ->select('feedback_rating.*', 'users.*', DB::raw('@rownum := @rownum + 1 AS rownum'))
-            ->where('feedback_rating.feedback_id','1');
-        //dd($feedback_question->get());    
+            ->where('feedback_rating.feedback_id', '1');
+        //dd($feedback_question->get());
         $base_path = $this->data['base_path'];
         if (!$request->ajax()) {
             return view('admin.feedback_survey.feedback_rating', $this->data);
@@ -1347,7 +1358,6 @@ class FeedbackController extends Controller
         //'all_result'=>__('message.all_result'),
         $time_filter = array('today' => __('message.today'), 'yesterday' => __('message.yesterday'), 'last_14_day' => __('message.last_14_day'), 'this_week' => __('message.this_week'), 'last_week' => __('message.last_week'), 'this_month' => __('message.this_month'), 'last_month' => __('message.last_month'), 'this_year' => __('message.this_year'), 'last_year' => __('message.last_year'), 'specific_date' => __('message.specific_date'));
         // dd($time_filter);
-
         $data[] = '';
         $this->data['user_id'] = $user_id;
         $this->data['location'] = $location;
@@ -1547,18 +1557,17 @@ class FeedbackController extends Controller
     public function reason_chart($user_id = null, $city = null, $created_from = null, $created_to = null, $time_period = null)
     {
 
-        $reason = DB::table('feedback_reason')->where('feedback_id','1')->select('*');
+        $reason = DB::table('feedback_reason')->where('feedback_id', '1')->select('*');
 
         $reason = $reason->get();
         $feedback_reason = $reason;
         $user = User::pluck('name', 'id');
         $location = City::pluck('cityName', 'cityName');
-
         $total = 0;
-        $results_total = DB::table('feedback_reason')->where('feedback_id','1')->select('*')->get();
+        $results_total = DB::table('feedback_reason')->where('feedback_id', '1')->select('*')->get();
         foreach ($reason as $key => $value) {
             $results = DB::table('feedback_rating')->select('*')
-                ->where('feedback_id','1')
+                ->where('feedback_id', '1')
                 ->where('comment', $value->feedback_reason)->count();
             $total = $total + $results;
         }
@@ -1758,7 +1767,7 @@ class FeedbackController extends Controller
             }
         }
         // dd($monthData);
-        $feedBackReason = DB::table('feedback_reason')->where('feedback_id','1')->select('*')->get();
+        $feedBackReason = DB::table('feedback_reason')->where('feedback_id', '1')->select('*')->get();
 
         $newMonthArray = [];
         $newYearArray = [];
@@ -1768,7 +1777,7 @@ class FeedbackController extends Controller
             $yearValue = [];
             $response_value = [];
             foreach ($months as $keyM => $valueM) {
-                $results = DB::table('feedback_rating')->where('feedback_id','1')->select('*');
+                $results = DB::table('feedback_rating')->where('feedback_id', '1')->select('*');
                 // ->whereYear('created_at', $currentYear)
                 // ->whereMonth('created_at', $valueM)
                 if ($time_period != null) {
@@ -1992,6 +2001,7 @@ class FeedbackController extends Controller
     //this section for notifiaction for compalain status
     public function notification_template()
     {
+        $complain_notification = StatusNotification::whereId(5)->first();
         $new = StatusNotification::where('id', 1)->first();
         $in_progress = StatusNotification::where('id', 2)->first();
         $resolve = StatusNotification::where('id', 3)->first();
@@ -2001,6 +2011,7 @@ class FeedbackController extends Controller
         $this->data['in_progress_status'] = $in_progress ? $in_progress->status : 0;
         $this->data['resolve_status'] = $resolve ? $resolve->status : 0;
         $this->data['late_status'] = $late ? $late->status : 0;
+        $this->data['notification_status'] = $complain_notification ? $complain_notification->status : 0;
 
         return view('admin.feedback_survey.notification_template', $this->data);
     }
@@ -2117,23 +2128,23 @@ class FeedbackController extends Controller
         try {
             DB::statement(DB::raw('set @rownum=0'));
             $responses = DB::table('feedback_survey')->select(DB::raw('DATE_FORMAT(created_at,"%d/%m") as date'), DB::raw('DATE(created_at) as full_date'), DB::raw('count(*) as responses'))
-                ->where('feedback_id','1')
+                ->where('feedback_id', '1')
                 ->groupBy('full_date')
                 ->orderBy('full_date', 'desc');
 
             //dd($responses);
             $this->data['users'] = DB::table('users')->select('*')->get();
-            $this->data['time_filter'] = array('today' => __('message.today'), 'yesterday' => __('message.yesterday'), 'last_14_day' => __('message.last_14_day'), 'this_week' => __('message.this_week'), 'last_week' => __('message.last_week'), 'this_month' => __('message.this_month'), 'last_month' => __('message.last_month'), 'this_year' => __('message.this_year'), 'last_year' => __('message.last_year'), 'specific_date' => __('message.specific_date'));    
+            $this->data['time_filter'] = array('today' => __('message.today'), 'yesterday' => __('message.yesterday'), 'last_14_day' => __('message.last_14_day'), 'this_week' => __('message.this_week'), 'last_week' => __('message.last_week'), 'this_month' => __('message.this_month'), 'last_month' => __('message.last_month'), 'this_year' => __('message.this_year'), 'last_year' => __('message.last_year'), 'specific_date' => __('message.specific_date'));
             $this->data['location'] = City::pluck('cityName', 'cityName');
             if (!$request->ajax()) {
                 return view('admin.feedback_survey.show_table_value', $this->data);
             }
-            if($request->get('extraData')){
+            if ($request->get('extraData')) {
 
-            $extraData = $request->input('extraData');
+                $extraData = $request->input('extraData');
 
-            $query = $this->getResponseData($extraData);
-            $responses = $query;
+                $query = $this->getResponseData($extraData);
+                $responses = $query;
             }
             $base_path = $this->data['base_path'];
             return Datatables::of($responses)
@@ -2197,9 +2208,9 @@ class FeedbackController extends Controller
     public function getResponseData($extraData)
     {
         DB::statement(DB::raw('set @rownum=0'));
-            $query = DB::table('feedback_survey')->where('feedback_survey.feedback_id', '1');
-                //dd($query->get());
-        if (!empty($extraData['user_id']) && $extraData['user_id'] != null) {           
+        $query = DB::table('feedback_survey')->where('feedback_survey.feedback_id', '1');
+        //dd($query->get());
+        if (!empty($extraData['user_id']) && $extraData['user_id'] != null) {
             $query->where('user_id', $extraData['user_id']);
         }
         if (!empty($extraData['location']) && $extraData['location'] != null) {
@@ -2208,15 +2219,15 @@ class FeedbackController extends Controller
         if (!empty($extraData['time_period']) && $extraData['time_period'] != null) {
 
             $time_period = $extraData['time_period'];
-            $created_from ='';
+            $created_from = '';
             $created_to = '';
             if (!empty($extraData['created_from']) && $extraData['created_from'] != null) {
                 $created_from = $extraData['created_from'];
-                
+
             }
             if (!empty($extraData['created_to']) && $extraData['created_to'] != null) {
                 $created_to = $extraData['created_to'];
-            }    
+            }
             //dd($time_period);
             if ($time_period == 'specific_date') {
                 if (($created_from != null && $created_to != null) && ($created_from != '0' && $created_to != '0')) {
@@ -2227,11 +2238,11 @@ class FeedbackController extends Controller
                 }
             } elseif ($time_period == 'today') {
                 $query = $query->whereDate('created_at', Carbon::now()->format('Y/m/d'));
-            }  elseif ($time_period == 'yesterday') {
+            } elseif ($time_period == 'yesterday') {
                 $query = $query->whereDate('created_at', '=', Carbon::yesterday()->format('Y-m-d'));
             } elseif ($time_period == 'last_14_day') {
                 $query = $query->whereDate('created_at', '>=', Carbon::now()->subDays(14)->toDateTimeString());
-                
+
             } elseif ($time_period == 'this_week') {
                 $start = Carbon::now()->startOfWeek();
                 $end = Carbon::now()->endOfWeek();
@@ -2256,15 +2267,15 @@ class FeedbackController extends Controller
                 $start = Carbon::now()->startOfYear()->subDays(365)->toDateString();
                 $end = Carbon::now()->startOfYear()->toDateString();
                 $query = $query->whereRaw(" Date(created_at) between '$start' and '$end'");
-            }else {
+            } else {
 
             }
 
         }
         //dd($query->get());
         return $query->select(DB::raw('DATE_FORMAT(created_at,"%d/%m") as date'), DB::raw('DATE(created_at) as full_date'), DB::raw('count(*) as responses'))
-                ->groupBy('full_date')
-                ->orderBy('full_date', 'desc');
+            ->groupBy('full_date')
+            ->orderBy('full_date', 'desc');
     }
     public function complain_pop_up()
     {
@@ -2344,5 +2355,153 @@ class FeedbackController extends Controller
 
         return redirect()->back();
     }
-    
+    public function view_complain_notification()
+    {
+        try {
+            $complain_notification = StatusNotification::whereId(5)->first();
+
+            $email_template = '';
+
+            if ($complain_notification) {
+                $email_template = $complain_notification->email_template;
+            }
+            $this->data['email_template'] = $email_template;
+            $this->data['complain_notification'] = $complain_notification;
+
+            return view('admin.complain.complain_notification', $this->data);
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th);
+        }
+    }
+    public function save_complain_notification(Request $request)
+    {
+        try {
+            $complain_notification = StatusNotification::whereId(5)->first();
+            $new = StatusNotification::where('id', 1)->first();
+            $in_progress = StatusNotification::where('id', 2)->first();
+            $resolve = StatusNotification::where('id', 3)->first();
+            $late = StatusNotification::where('id', 4)->first();
+
+            $this->data['new_status'] = $new ? $new->status : 0;
+            $this->data['in_progress_status'] = $in_progress ? $in_progress->status : 0;
+            $this->data['resolve_status'] = $resolve ? $resolve->status : 0;
+            $this->data['late_status'] = $late ? $late->status : 0;
+            $this->data['notification_status'] = $complain_notification ? $complain_notification->status : 0;
+            if ($complain_notification == null) {
+                dd('if');
+                DB::beginTransaction();
+                StatusNotification::create([
+                    'id' => 5,
+                    'email_template' => $request->email_template,
+                    'status' => 1,
+                ]);
+                DB::commit();
+                $request->session()->flash('message.level', 'success');
+                $request->session()->flash('message.content', 'Complain notification saved successfully!');
+
+                return redirect()->to('admin/notification_template');
+            } else {
+                DB::beginTransaction();
+                StatusNotification::whereId(5)->update([
+                    'email_template' => $request->email_template,
+                ]);
+                DB::commit();
+                $request->session()->flash('message.level', 'success');
+                $request->session()->flash('message.content', 'Complain notification updated successfully!');
+
+                return redirect()->to('admin/notification_template');
+            }
+
+        } catch (\Throwable $th) {
+            // dd($th);
+            DB::rollBack();
+            $request->session()->flash('message.level', 'danger');
+            $request->session()->flash('message.content', $th->getMessage());
+            return redirect()->to('admin/notification_template');
+
+        }
+    }
+    public function send_complain_notification(Request $request)
+    {
+        try {
+            $user = User::where('user_role', $request->role_id)->get();
+            $notificationTemplate = StatusNotification::whereId(5)->first();
+            $complainId = $request->get('complainId');
+            $complain = FeedBackComplains::whereId($complainId)->first();
+
+            FeedBackComplains::whereId($complainId)->update([
+                'role_id'   =>  $request->role_id
+            ]);
+
+            if ($notificationTemplate) {
+                if ($user) {
+                    foreach ($user as $key => $value) {
+                        $mail = new SendEmailLib;
+                        $to = $value->email;
+                        $messageContent = str_replace('{var_user_name}', $value->name, $notificationTemplate->email_template);
+                        $messageContentemail = str_replace('{var_user_email}', $value->email, $messageContent);
+
+                        $subject = "new complaint assigned to you";
+                        $message = $messageContentemail;
+                        $message .= 'Name : ' . $complain->name . '<br>';
+                        $message .= 'Email : ' . $complain->email . '<br>';
+                        $message .= 'Mobile : ' . $complain->mobile . '<br>';
+                        $message .= 'Complaint  : ' . $complain->comment . '<br>';
+                        $message .= 'Status : ' . $complain->status . '<br>';
+                        $message .= 'Date : ' . $complain->created_at . '<br>';
+                        $message .= "<br><br><br>Thanks, <br> Digital Survey Team";
+                        $test = $mail->sendEmail($to, $subject, $message);
+                    }
+                } else {
+                    return response()->json([
+                        'message' => 'User not found!',
+                        'success' => true,
+                    ], 200);
+
+                }
+            } else {
+                return response()->json([
+                    'message' => 'Please create complain notification template!',
+                    'success' => true,
+                ], 200);
+
+            }
+            return response()->json([
+                'message' => 'Notification sent successfully!',
+                'success' => true,
+            ], 200);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+                'success' => false,
+            ], 500);
+        }
+    }
+    public function save_action_text(Request $request)
+    {
+        try {
+            $action_text = $request->get('action_text');
+            $id = $request->get('id');
+            DB::beginTransaction();
+
+            FeedBackComplains::whereId($id)->update([
+                'action_text' => $action_text,
+            ]);
+            DB::commit();
+            return response()->json([
+                'message' => 'Action message saved successfully!',
+                'success' => true,
+            ], 200);
+        } catch (\Throwable $th) {
+
+            return response()->json([
+                'message' => $th->getMessage(),
+                'success' => false,
+            ], 500);
+
+        }
+    }
+
 }

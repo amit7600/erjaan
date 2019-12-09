@@ -99,24 +99,42 @@ class SettingController extends Controller {
      */
 
     public function saveCommonSetting(Request $request) {
-        $implodeChart = count($request->get('selectChart'))>0 ? implode('|', $request->get('selectChart')) : '';
+        // dd($request);
+        if($request->get('selectChart') != null){
+            $implodeChart = count($request->get('selectChart'))>0 ? implode('|', $request->get('selectChart')) : '';
+        }else{ 
+            $implodeChart = '';
+        } 
         $setting = Setting::pluck('setting_value', 'setting_key');
                 $arrayName = [];
         foreach ($setting as $key => $value) {
-            if ($request->input($key) != "" || $request->input($key) != $value) {
-                array_push($arrayName, $key);
-                if ($key == 'survey_form_id') {
-                    $implodeChartData = $implodeChart ? implode(',', $request->get('selectChart')) : null;
+            if($key != 'choose_logo' && $key != 'choose_background'){
+                if ($request->input($key) != "" || $request->input($key) != $value) {
+                    array_push($arrayName, $key);
+                    if ($key == 'survey_form_id') {
+                        $implodeChartData = $implodeChart ? implode(',', $request->get('selectChart')) : null;
+                    } else {
+                        $implodeChartData = null;
+                    }
+                    Setting::where('setting_key', $key)->update(['setting_value' => $request->input($key), 'survey_question_chart' => $implodeChartData]);
                 } else {
-                    $implodeChartData = null;
+                    $request->session()->flash('message.level', 'danger');
+                    $request->session()->flash('message.content', 'Please fill required fields.');
+                    return redirect()->route('common_setting');
                 }
-                Setting::where('setting_key', $key)->update(['setting_value' => $request->input($key), 'survey_question_chart' => $implodeChartData]);
-            } else {
-                $request->session()->flash('message.level', 'danger');
-                $request->session()->flash('message.content', 'Please fill required fields.');
-                return redirect()->route('common_setting');
             }
         }
+        if($request->hasFile('choose_logo')){
+            $logo = $this->uploadImage($request->file('choose_logo'));
+            Setting::where('setting_key', 'choose_logo')->update(['setting_value' => $logo]);
+        }
+        if($request->hasFile('choose_background')){
+            $background = $this->uploadImage($request->file('choose_background'));
+            Setting::where('setting_key', 'choose_background')->update(['setting_value' => $background]);
+        }
+        
+
+
         $request->session()->flash('message.level', 'success');
         $request->session()->flash('message.content', __('message.setting').' '.__('message.save').' '.__('message.successfully'));
         return redirect()->route('common_setting');
@@ -137,5 +155,17 @@ class SettingController extends Controller {
         
         $this->data['quick_setting'] = $quick_setting;
         return view('admin.setting.quick_participant_setting',$this->data);
+    }
+    public function uploadImage($image)
+    {
+        $tempname = explode('.', $image->getClientOriginalName());
+        $tempname = str_replace(' ', '_', $tempname);
+        $name = $tempname[0].'_'.time().'.'.$image->getClientOriginalExtension();
+        // $path = 'uploads/book'.$request->get('bookId').'/'.$request->get('coverPage');
+        $path = '/uploads/loginPage';
+        $destinationPath = public_path($path);
+        $imagePath = $destinationPath. "/". $name;
+        $image->move($destinationPath, $name);
+        return $path.'/'.$name;
     }
 }

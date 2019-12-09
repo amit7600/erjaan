@@ -13,12 +13,12 @@
                                         if (Session::get('select_chart_type') == 2) {
                                             echo "selected";
                                         }
-                                        ?> value="1">{{__('message.bar_chart')}}</option>
+                                        ?> value="2">{{__('message.bar_chart')}}</option>
                                 <option <?php
                                         if (Session::get('select_chart_type') == 1) {
                                             echo "selected";
                                         }
-                                        ?> value="2"> {{__('message.pie_chart')}}</option>
+                                        ?> value="1"> {{__('message.pie_chart')}}</option>
                             </select>
                             <span class="span-right-input-icon">
                                 <i class="ul-form__icon i-Arrow-Down"></i>
@@ -1275,7 +1275,7 @@
                             }
                         } else {
                             ?>
-
+                        <div class="col-md-12 col-sm-12 col-xs-12 text-center"><span style="width: 100%;float: left; position: relative;margin: 10px 0px;font-size: 22px; color: red;">No record found!</span></div>
                     <?php } ?>
                     @else
                     @include('dashboard_blade.pie_chart')

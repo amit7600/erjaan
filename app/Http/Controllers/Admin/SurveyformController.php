@@ -856,7 +856,8 @@ class SurveyformController extends Controller {
         // dd($params,$participant);
         $count = 0;
         $temp_id = $params['template'];
-        $email_type = $params['email_type'];        
+        $email_type = $params['email_type'];   
+        //dd($contentData);
         if($email_type==1){ // for send sms
             $send_sms = new SendSMSLib;
 
@@ -875,6 +876,7 @@ class SurveyformController extends Controller {
                             ->get();
             $ids = [];
             $contentData = $template->content;
+            
             foreach($participant as $row){
                 $token = md5(time());
                 $to_number = $params['on_behalf']==2?$row->dial_code.$row->mobile:$row->dial_code.$row->on_behalf_mobile;
@@ -993,18 +995,22 @@ class SurveyformController extends Controller {
             // $params['survey_form_link'] = $this->data['base_path'].'survey_form/'.$this->_encrypt($params['survey_id']);
             $ids = [];
             $contentData = $template->content;
+            
             foreach($participant as $row){
                 $token = md5(time());
 
                 $mail = new SendEmailLib;
                 $to = $params['on_behalf']==2?$row->email:$row->on_behalf_email;
                 // set the dynamic username to the sms content
+                
                 $template->content = str_replace('(participant_name)', $row->first_name, $contentData);
+                //dd($template->content);
                 // foreach ($parameterList as $key => $value) {
                 //     $template->content = str_replace('(' . strtolower(str_replace(' ', '_', $value->survey_form_title)) . ')', $value->survey_form_title, $template->content);    
                 // }
                 // count how many '(survey_' in the content
                 $countSurveyIn = substr_count($template->content, '(survey_');
+                
                 // check $countSurveyIn in 0 or grater
                 if ($countSurveyIn > 0) {
 
@@ -1037,9 +1043,12 @@ class SurveyformController extends Controller {
                             $data = json_decode($data);
                             $template->content = str_replace('(complainPopUp)', $data->data->url, $template->content);
                         }else{
+                            //dd($searchResult);
                             $expl = explode('_', $searchResult);
                             array_push($ids, $expl[1]);
+                            //dd($expl);
                             $link = $this->data['base_path'].'survey_form/'.$this->_encrypt($expl[1]);
+                            
                             // survey link url
                             $params['survey_form_link'] = $this->data['base_path'].'survey_form/'.$this->_encrypt($expl[1]);
 

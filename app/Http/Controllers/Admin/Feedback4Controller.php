@@ -323,7 +323,7 @@ class Feedback4Controller extends Controller
             $displayOption = null;
         }
         if ($selected_feedback_question != null) {
-            DB::table('selected_feedback_question')->where('id', 4)->update([
+            DB::table('selected_feedback_question')->where('feedback_id', 4)->update([
                 'question_background_color' => $request->get('question_background_color'),
                 'feedback_id' => $request->get('feedback_id'),
                 'question_form_background' => $question_form_background,
@@ -343,6 +343,7 @@ class Feedback4Controller extends Controller
         } else {
             DB::table('selected_feedback_question')->insert([
                 'question_background_color' => $request->get('question_background_color'),
+                'feedback_id' => $request->get('feedback_id'),
                 'question_form_background' => $question_form_background,
                 'question_form_logo' => $question_form_logo,
                 'thank_you_message' => $request->get('thank_you_message'),

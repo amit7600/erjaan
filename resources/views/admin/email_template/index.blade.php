@@ -72,7 +72,7 @@ if (!empty($template_data->id)) {
                             class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">{{__('message.parameters')}}<span
                                 class="required">*</span></label>
                         <div class="col-lg-5 col-md-5 col-sm-5 mb-2">
-                            <textarea name="variables" class="form-control" disabled="true">{{__('message.participant_name')}} = ({{__('message.participant')}}_{{__('message.name')}})
+                            <textarea name="variables" class="form-control" disabled="true">{{__('message.participant_name')}} = (participant_name)
                             </textarea>
                         </div>
                     </div>

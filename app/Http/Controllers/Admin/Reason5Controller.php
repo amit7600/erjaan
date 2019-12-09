@@ -73,7 +73,7 @@ class Reason5Controller extends Controller
             }
 
             if ($selected_feedback_question != null) {
-                DB::table('selected_feedback_question')->where('id', 2)->update([
+                DB::table('selected_feedback_question')->where('feedback_id', 5)->update([
                     'feedback_id' => $request->get('feedback_id'),
                     'reason_title' => $request->get('reason_title'),
                     'reason_appear' => $request->get('reason_appear'),

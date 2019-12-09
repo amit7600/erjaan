@@ -169,7 +169,7 @@
 
 
     @elseif($layout=='normal')
-    <script src="{{asset('assets/js/es5/sidebar.large.script.min.js')}}"></script>
+    <script src="{{asset('assets/js/es5/sidebar.large.script.js')}}"></script>
 
 
     @elseif($layout=='horizontal')
@@ -177,7 +177,7 @@
 
 
     @else
-    <script src="{{asset('assets/js/es5/sidebar.large.script.min.js')}}"></script>
+    <script src="{{asset('assets/js/es5/sidebar.large.script.js')}}"></script>
 
     @endif
     <script src="{{asset('assets/js/es5/customizer.script.min.js')}}"></script>

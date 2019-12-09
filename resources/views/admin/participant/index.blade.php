@@ -116,13 +116,8 @@ if (!empty($repairman_data->id)) {
                     <div class="form-group row">
                         <label for="staticEmail"
                             class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">{{__('message.location')}}
-                            <span class="required">*</span></label>
-                        <div class="col-md-1 col-sm-1 col-xs-12">
-                            <input type="text" readonly="readonly" class="form-control" name="dialing_code"
-                                id="dialing_code"
-                                value="<?php echo (!empty($repairman_data))?$repairman_data->dial_code:""; ?>">
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 mb-2">
+                            <span class="required">*</span></label>                        
+                        <div class="col-lg-5 col-md-5 col-sm-5 mb-2">
                             <div class="input-right-icon">
                                 <select class="select2_group form-control" id="location_id" name="location_id">
                                     <option value="">{{__('message.select_location')}}</option>
@@ -147,7 +142,12 @@ if (!empty($repairman_data->id)) {
                         <label for="staticEmail"
                             class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">{{__('message.mobile')}}<span
                                 class="required">*</span></label>
-                        <div class="col-lg-5 col-md-5 col-sm-5 mb-2">
+                        <div class="col-md-1 col-sm-1 col-xs-12">
+                            <input type="text" readonly="readonly" class="form-control" name="dialing_code"
+                                id="dialing_code"
+                                value="<?php echo (!empty($repairman_data))?$repairman_data->dial_code:""; ?>">
+                        </div>        
+                        <div class="col-lg-4 col-md-4 col-sm-4 mb-2">
                             <div class="input-right-icon">
                                 <input type="text" id="mobile" maxlength="15" name="mobile" class="form-control"
                                     value="{{!empty($repairman_data->mobile)?$repairman_data->mobile:Input::old('mobile')}}"
@@ -415,7 +415,14 @@ if (!empty($repairman_data->id)) {
 <script type="text/javascript">
     $(function() {    
         var location_id = $("#location_id").val();
-            
+
+        <?php if (empty($repairman_data->id)) { ?>
+            if(location_id == null || location_id == ''){
+                location_id = 191;
+            }else{
+                location_id = location_id;
+            }
+        <?php } ?>
             $.ajax({
                 url  : '{{route('get_country_code')}}',
                 type : 'GET',
@@ -424,6 +431,9 @@ if (!empty($repairman_data->id)) {
                 success: function(resp){
                     if(resp){
                         $('#dialing_code').val(resp)
+                        <?php if (empty($repairman_data->id)) { ?>
+                        $('#location_id').val(191)
+                        <?php } ?>
                     } 
                 },
                 error: function(resp){

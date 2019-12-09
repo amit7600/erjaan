@@ -46,7 +46,7 @@ Message
         @endif
         <!--begin::form 2-->
 
-        @if(($status_notification != null))
+        @if(($status_notification == null))
         {!! Form::open(['route' => 'save_reason_status_template']) !!}
         @else
         {!! Form::model($status_notification,['route' => 'save_reason_status_template','method' => 'PUT']) !!}

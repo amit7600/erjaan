@@ -215,7 +215,7 @@ Message
                         <div class="col-lg-5 col-md-5 col-sm-5 mb-2 d-inline-flex">
                             <label class="radio radio-primary mr-2">
                                 <?php 
-                                $check =  $quick_setting->quick_add_button ;
+                                $check =  isset($quick_setting->quick_add_button) ?$quick_setting->quick_add_button:1;
                                 ?>
                                 {{ Form::radio('quick_add_button', '1' , $check == 1 ? true : false ) }}
                                 {{__('message.yes')}}

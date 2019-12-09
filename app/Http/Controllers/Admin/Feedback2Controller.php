@@ -323,7 +323,7 @@ class Feedback2Controller extends Controller
         } 
 
         if ($selected_feedback_question != null) {
-            DB::table('selected_feedback_question')->where('id', 2)->update([
+            DB::table('selected_feedback_question')->where('feedback_id', 2)->update([
                 'question_background_color' => $request->get('question_background_color'),
                 'feedback_id' => $request->get('feedback_id'),
                 'question_form_background' => $question_form_background,
@@ -345,6 +345,7 @@ class Feedback2Controller extends Controller
                 'question_background_color' => $request->get('question_background_color'),
                 'question_form_background' => $question_form_background,
                 'question_form_logo' => $question_form_logo,
+                'feedback_id' => $request->get('feedback_id'),
                 'thank_you_message' => $request->get('thank_you_message'),
                 'high_rating_name' => $request->get('high_rating_name'),
                 'low_rating_name' => $request->get('low_rating_name'),
@@ -558,7 +559,7 @@ class Feedback2Controller extends Controller
             'comment' => $request->get('comment'),
             'user_id' => Auth::id(),
             'user_city' => $user_city,
-            'feedback_id' => $request->get('feedBackRatings')
+            'feedback_id' => $request->get('feedback_id')
         ]);
         return response()->json([
             'message' => __('message.thank') . ' ' . __('message.for') . ' ' . __('message.your') . ' ' . __('message.feedback'),

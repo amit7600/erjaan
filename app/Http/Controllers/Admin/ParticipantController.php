@@ -667,8 +667,8 @@ class ParticipantController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function get_dialing_code(Request $request) {
-        $country_data = Country::where('dial_code', $request->get('location_id'))->first();        
-        echo json_encode($country_data->id);
+        $country_data = Country::where('id', $request->get('location_id'))->first(); 
+        echo json_encode($country_data->dial_code);
         die();
     }
 
