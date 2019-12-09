@@ -763,6 +763,7 @@ Message
                 </div>
             </div>
         </div>
+        @include('admin.complain.sectionReport')
     </div>
 </div>
 @stop

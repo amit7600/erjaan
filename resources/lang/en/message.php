@@ -314,8 +314,8 @@
         'feedback_answer_list'                  =>  'Feedback Answer List',
         'comments'                              =>  'Comments',
         'modified_by'                           =>  'Modified by',
-        'created_at'                            =>  'Created_at',
-        'updated_at'                            =>  'Updated_at',
+        'created_at'                            =>  'Created at',
+        'updated_at'                            =>  'Updated at',
         'erjaan_smart_solution'                 =>  'Erjaan Smart Survey Solution',
         'all_right_reserved'                    =>  'All rights reserved',
         'by_digital_survey'                     =>  'by Digital survey',
@@ -724,7 +724,9 @@
         'complain_notification'     => 'Complain notification',
         'notification_template'     => 'Notification template',
         'customer_variable'         => 'Customer variable',
-        'change'                    => 'Change'
+        'change'                    => 'Change',
+        'select_section'            => 'Select section',
+        'complain_section_report'   => 'Complain section report',
 
 
 

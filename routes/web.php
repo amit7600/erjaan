@@ -370,4 +370,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => 'auth
     Route::post('send_complain_notification', 'FeedbackController@send_complain_notification')->name('send_complain_notification');
     Route::post('save_action_text', 'FeedbackController@save_action_text')->name('save_action_text');
 
+    Route::post('complainExport', 'ExcelController@complainExport')->name('complainExport');
+
 });

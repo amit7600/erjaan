@@ -3,22 +3,23 @@
 namespace App\Exports;
 
 use App\Participant;
-use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
 class ParticipantExport implements FromView
 {
-	public function __construct($request){
-    		$this->request = $request;
-    	}
+    public function __construct($request)
+    {
+        $this->request = $request;
+    }
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function view(): View
     {
-    	$participants = Participant::select('*')
-                ->where('is_deleted', 0)
-                ->orderBy('id', 'asc');
+        $participants = Participant::select('*')
+            ->where('is_deleted', 0)
+            ->orderBy('id', 'asc');
 
         if ($this->request->get('category_id') != null) {
             $participants->where('category_id', $this->request->get('category_id'));
@@ -45,14 +46,14 @@ class ParticipantExport implements FromView
         }
 
         if ($this->request->get('search_filter_value') != null) {
-            $participants->where(function($q) use ($extraData) {
+            $participants->where(function ($q) use ($extraData) {
                 $q->where(DB::raw('CONCAT_WS(" ", `first_name`, `last_name`)'), 'like', "%" . $this->request->get('search_filter_value') . "%");
                 $q->orWhere('email', $this->request->get('search_filter_value'));
                 $q->orWhere('mobile', $this->request->get('search_filter_value'));
             });
-        } 
+        }
         return view('exports.all_participant', [
-            'participants' => $participants->get()
+            'participants' => $participants->get(),
         ]);
     }
 }

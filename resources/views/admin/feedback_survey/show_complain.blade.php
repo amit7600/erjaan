@@ -6,8 +6,6 @@ Message
 @stop
 {{-- page level styles --}}
 @section('header_styles')
-<!--     <link href="{{asset('dropzone/dist/dropzone.css')}}" rel="stylesheet"/>
--->
 <style type="text/css">
     #image_on_popup img {
         max-width: 100%;
@@ -28,6 +26,10 @@ Message
     .main_loader .spinner-bubble {
         font-size: 11px;
     }
+
+    .table td:nth-child(8) {
+        display: flex;
+    }
 </style>
 
 @stop
@@ -41,37 +43,115 @@ Message
 </div>
 <div class="row">
     <div class="col-lg-12 mb-3">
-        @if(count($errors) > 0)
-        @foreach ($errors->all() as $error)
-        <div class="alert alert-card alert-danger">
-            <strong class="text-capitalize">{{$error}}</strong>
+        @if(session()->has('message.level'))
+        <div class="alert alert-card alert-{{ session('message.level') }}">
+            <strong class="text-capitalize">{!! session('message.content') !!}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        @break
-        @endforeach
         @endif
-
+        {!! Form::open(['route' => 'complainExport','method' => 'POST']) !!}
         <div class="card mb-4 text-left">
             <div class="card-body">
                 <h4 class="card-title mb-3">
                     {{__('message.filter_complain_report')}}
                 </h4>
                 <div class="form-group row">
-                    <label for="staticEmail"
-                        class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">
-                        {{__('message.select_status')}}<span class="required">*</span></label>
-                    <div class="col-lg-5 col-md-5 col-sm-5 mb-2">
-                        <div class="input-right-icon">
-                            {!! Form::select('status', ['new' => __('message.new'),'in_progress' =>
-                            __('message.inProgress'),'resolved' =>
-                            __('message.resolved'),'late' => __('message.late')], null, ['class' => 'form-control','id'
-                            =>
-                            'status','placeholder' => __('message.select_status')]) !!}
-                            <span class="span-right-input-icon">
-                                <i class="ul-form__icon i-Arrow-Down"></i>
-                            </span>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label for="staticEmail"
+                                class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">
+                                {{__('message.select_status')}}<span class="required">*</span></label>
+                            <div class="col-lg-5 col-md-5 col-sm-5 mb-2">
+                                <div class="input-right-icon">
+                                    {!! Form::select('status', ['new' => __('message.new'),'in_progress' =>
+                                    __('message.inProgress'),'resolved' =>
+                                    __('message.resolved'),'late' => __('message.late')], null, ['class' =>
+                                    'form-control','id'
+                                    =>
+                                    'status','placeholder' => __('message.select_status')]) !!}
+                                    <span class="span-right-input-icon">
+                                        <i class="ul-form__icon i-Arrow-Down"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label for="staticEmail"
+                                class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">
+                                {{__('message.select_user')}}<span class="required">*</span></label>
+                            <div class="col-lg-5 col-md-5 col-sm-5 mb-2">
+                                <div class="input-right-icon">
+                                    {!! Form::select('user',$users , null, ['class' =>
+                                    'form-control','id'
+                                    =>
+                                    'user','placeholder' => __('message.select_user')]) !!}
+                                    <span class="span-right-input-icon">
+                                        <i class="ul-form__icon i-Arrow-Down"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label for="staticEmail"
+                                class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">{{__('message.select_from')}}<span
+                                    class="required">*</span></label>
+                            <div class="col-lg-5 col-md-5 col-sm-5 mb-2">
+                                <div class="input-right-icon">
+                                    <input name="created_from" value="<?php echo Session::get('created_from') ?>"
+                                        readonly type="text" class="form-control has-feedback-left" id="single_cal5"
+                                        placeholder="From Date YYYY-MM-DD" aria-describedby="inputSuccess2Status4">
+                                    <span class="fa fa-calendar-o span-right-input-icon form-control-feedback left">
+                                        <i class="ul-form__icon i-Calendar-4"></i>
+                                    </span>
+                                    <span id="inputSuccess2Status4" class="sr-only">(success)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label for="staticEmail"
+                                class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">{{__('message.select_to')}}<span
+                                    class="required">*</span></label>
+                            <div class="col-lg-5 col-md-5 col-sm-5 mb-2">
+                                <div class="input-right-icon">
+                                    <input name="created_to" value="<?php echo Session::get('created_to') ?>" readonly
+                                        type="text" class="form-control has-feedback-left" id="single_cal4"
+                                        placeholder="To Date YYYY-MM-DD" aria-describedby="inputSuccess2Status4">
+                                    <span class="fa fa-calendar-o span-right-input-icon form-control-feedback left">
+                                        <i class="ul-form__icon i-Calendar-4"></i>
+                                    </span>
+                                    <span id="inputSuccess2Status4" class="sr-only">(success)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label for="staticEmail"
+                                class="ul-form__label col-lg-3 col-md-3 col-sm-3 col-form-label text-right">
+                                {{__('message.select_section')}}<span class="required">*</span></label>
+                            <div class="col-lg-5 col-md-5 col-sm-5 mb-2">
+                                <div class="input-right-icon">
+                                    {!! Form::select('user_role',$user_roles, null, ['class' =>
+                                    'form-control','id'
+                                    =>
+                                    'user_role','placeholder' => __('message.select_section')]) !!}
+                                    <span class="span-right-input-icon">
+                                        <i class="ul-form__icon i-Arrow-Down"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -81,13 +161,15 @@ Message
                     <div class="row text-right">
                         <div class="col-sm-4"></div>
                         <div class="ol-lg-6 text-left">
-                            <input type="submit" onclick="submitForm()" class="btn btn-success"
+                            <input type="button" onclick="submitForm()" class="btn btn-success"
                                 value="{{__('message.view_report')}}">
+                            <input type="submit" class="btn btn-primary" value="{{__('message.export')}}">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {!! Form::close() !!}
 
         <!-- start survey question option form -->
         <div class="card mb-4 text-left">
@@ -130,8 +212,16 @@ Message
 <script type="text/javascript">
     function submitForm(){
         var status = $('#status').val();
+        var user = $('#user').val();
+        var user_role = $('#user_role').val();
+        var from = $('#single_cal5').val();
+        var to = $('#single_cal4').val();
         extraData = {};
         extraData.status = status;
+        extraData.user = user;
+        extraData.user_role = user_role;
+        extraData.from = single_cal5.value;
+        extraData.to = to;
         dataTable.ajax.reload();
     }
 </script>
@@ -432,4 +522,5 @@ var columnDefs = [
     }
 </script>
 @include('datatable.dt_js')
+
 @stop

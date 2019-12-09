@@ -6,6 +6,7 @@ use App\City;
 use App\FeedBackComplains;
 use App\FeedBackRatings;
 use App\FeedbackReason;
+use App\UserRoles;
 use App\Http\Controllers\Controller;
 use App\Package\SendEmailLib;
 use App\StatusNotification;
@@ -1010,6 +1011,12 @@ class FeedbackController extends Controller
 
         DB::statement(DB::raw('set @rownum=0'));
 
+        $users = User::pluck('name', 'id');
+        $user_roles = DB::table('tbl_user_role')->pluck('role', 'id');
+
+        $this->data['users'] = $users;
+        $this->data['user_roles'] = $user_roles;
+
         if (!$request->ajax()) {
             return view('admin.feedback_survey.show_complain', $this->data);
         }
@@ -1023,15 +1030,15 @@ class FeedbackController extends Controller
         return Datatables::of($complains)
             ->addColumn('action', function ($row) {
 
-                $textarea = \Form::textarea('action_text', $row->action_text, ['class' => 'form-control', 'rows' => '2']);
-                $textarea .= 
-                '<a   style="color:green;" class="float-right"><i class="i-Yes" onClick="save_action_text('.$row->id .')"></i></a>';
+                $textarea = \Form::textarea('action_text', $row->action_text, ['class' => 'form-control', 'rows' => '4', 'style' => 'width: 250px;']);
+                $textarea .=
+                '<a   style="color:green;margin-left: 10px;font-size: 30px;" class="float-right"><i class="i-Yes" onClick="save_action_text(' . $row->id . ')"></i></a>';
                 return $textarea;
             })
             ->addColumn('section', function ($row) {
                 $roles = DB::table('tbl_user_role')->pluck('role', 'id');
-                
-                $section = \Form::select('section', $roles,$row->role_id, ['class' => 'form-control', 'placeholder' => 'Select role', 'id' => 'notification' . $row->id . '', 'onchange' => 'send_notification(this,' . $row->id . ')']);
+
+                $section = \Form::select('section', $roles, $row->role_id, ['class' => 'form-control', 'placeholder' => 'Select role', 'id' => 'notification' . $row->id . '', 'onchange' => 'send_notification(this,' . $row->id . ')']);
                 return $section;
             })
             ->editColumn('created_at', function ($row) {
@@ -1098,10 +1105,21 @@ class FeedbackController extends Controller
         $query = FeedBackComplains::select('*', DB::raw('@rownum := @rownum + 1 AS rownum'))
             ->orderBy('id', 'DESC');
 
+        if (!empty($extraData['user'])) {
+            $query->where('user_id', $extraData['user']);
+        }
         if (!empty($extraData['status'])) {
             $query->where('status', $extraData['status']);
         }
+        if (!empty($extraData['user_role'])) {
+            $query->where('role_id', $extraData['user_role']);
+        }
+        if (!empty($extraData['from']) && !empty($extraData['to'])) {
+            $created_from = date('Y/m/d', strtotime($extraData['from']));
+            $created_to = date('Y/m/d', strtotime($extraData['to']));
+            $query->whereRaw(" Date(created_at) between '$created_from' and '$created_to'");
 
+        }
         return $query;
     }
     public function question_report()
@@ -1359,6 +1377,14 @@ class FeedbackController extends Controller
         $time_filter = array('today' => __('message.today'), 'yesterday' => __('message.yesterday'), 'last_14_day' => __('message.last_14_day'), 'this_week' => __('message.this_week'), 'last_week' => __('message.last_week'), 'this_month' => __('message.this_month'), 'last_month' => __('message.last_month'), 'this_year' => __('message.this_year'), 'last_year' => __('message.last_year'), 'specific_date' => __('message.specific_date'));
         // dd($time_filter);
         $data[] = '';
+
+        // section chart start here
+
+        $userRoles = UserRoles::get();
+        
+
+        $this->data['userRoles'] = $userRoles;
+
         $this->data['user_id'] = $user_id;
         $this->data['location'] = $location;
         $this->data['city'] = $city;
@@ -1369,7 +1395,6 @@ class FeedbackController extends Controller
         $this->data['created_to'] = $created_to;
         $this->data['time_period'] = $time_period;
         $this->data['time_filter'] = $time_filter;
-
         return view('admin.feedback_survey.complain_chart', $this->data);
     }
     public function complain_chart_filter(Request $request)
@@ -2431,7 +2456,7 @@ class FeedbackController extends Controller
             $complain = FeedBackComplains::whereId($complainId)->first();
 
             FeedBackComplains::whereId($complainId)->update([
-                'role_id'   =>  $request->role_id
+                'role_id' => $request->role_id,
             ]);
 
             if ($notificationTemplate) {
