@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use DB;
-use Yajra\Datatables\Datatables;
 use App\UserRoles;
+use DB;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class UserRolesController extends Controller
 {
@@ -15,9 +15,10 @@ class UserRolesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     var $data = array('menu_type' => 1);
+    public $data = array('menu_type' => 1);
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->data['base_path'] = url('/') . '/';
         // $this->data['base_path'] = 'http://ss.erjaan.com/';
     }
@@ -32,46 +33,46 @@ class UserRolesController extends Controller
         }
 
         return Datatables::of($user_role)
-            ->addColumn('action', function($row) {
+            ->addColumn('action', function ($row) {
 
                 $edit_url = route('user_roles.edit', $row->id);
                 $delete_url = route('user_roles.destroy', $row->id);
                 // $details_url = route('feedback_question.show', $row->id);
-//                $view_report_url = route('survey_report', $this->_encrypt($row->id));
+                //                $view_report_url = route('survey_report', $this->_encrypt($row->id));
                 // $view_report_url = route('report.show', $row->id);
                 $links = '';
                 // if($row->id != 1 && $row->id != 2){
-                    $links = '<a title="'.__('message.edit').'" href="' . $edit_url . '" class="text-success mr-2 text-25"><i class="i-Pen-4 nav-icon font-weight-bold" aria-hidden="true"></i></a>&nbsp';
-                if($row->id != '1' && $row->id != '2'){
-                    $links .= '<a title="'.__('message.delete').'" data-href="' . $delete_url . '" class="text-danger mr-2 text-25 delete_data"><i class="i-Close-Window nav-icon font-weight-bold" aria-hidden="true"></i></a>';
+                $links = '<a title="' . __('message.edit') . '" href="' . $edit_url . '" class="text-success mr-2 text-25"><i class="i-Pen-4 nav-icon font-weight-bold" aria-hidden="true"></i></a>&nbsp';
+                if ($row->id != '1' && $row->id != '2') {
+                    $links .= '<a title="' . __('message.delete') . '" data-href="' . $delete_url . '" class="text-danger mr-2 text-25 delete_data"><i class="i-Close-Window nav-icon font-weight-bold" aria-hidden="true"></i></a>';
                 }
                 // }
                 // $links .= '<a title="View Survey Form Details" rel="'.$row->id.'" href="javascript:void(0)" class="btn btn-warning more-details"><i class="fa fa-search" aria-hidden="true"></i></a>';
                 // $links .= '<a title="View Survey Form Report" href="'.$view_report_url.'" class="btn btn-success"><i class="fa fa-search" aria-hidden="true"></i> Survey Report</a>';
-                
+
                 return $links;
             })
-            ->addColumn('status',function($row){
+            ->addColumn('status', function ($row) {
                 $check = $row->status == 1 ? 'checked' : '';
                 $links = '<label class="switch switch-primary mr-3">
-                            <input type="checkbox" class="isActive" '.$check.'>
+                            <input type="checkbox" class="isActive" ' . $check . '>
                             <span class="slider"></span>
                         </label>';
                 return $links;
             })
 
-            // ->editColumn('survey_form_logo', function($row) use ($base_path) {
-            //     $image = $row->survey_form_logo;
-            //     $image = !empty($image) ? $image : "";
-            //     if (!file_exists($image)) {
-            //         $image = "public/uploads/nophoto.png";
-            //     }
-            //     $image = $base_path . $image;
-            //     $img_tag = '<img src="' . $image . '" alt="" width="30" height="30"/>';
-            //     return $img_tag;
-            // })
+        // ->editColumn('survey_form_logo', function($row) use ($base_path) {
+        //     $image = $row->survey_form_logo;
+        //     $image = !empty($image) ? $image : "";
+        //     if (!file_exists($image)) {
+        //         $image = "public/uploads/nophoto.png";
+        //     }
+        //     $image = $base_path . $image;
+        //     $img_tag = '<img src="' . $image . '" alt="" width="30" height="30"/>';
+        //     return $img_tag;
+        // })
 
-            ->rawColumns(['role','status', 'action'])
+            ->rawColumns(['role', 'status', 'action'])
             ->make(true);
     }
 
@@ -82,7 +83,7 @@ class UserRolesController extends Controller
      */
     public function create()
     {
-        $this->data['user_role'] = DB::table('tbl_user_role')->select('id','role')->where('status',1)->get();
+        $this->data['user_role'] = DB::table('tbl_user_role')->select('id', 'role')->where('status', 1)->get();
         return view('admin.user_roles.create', $this->data);
     }
 
@@ -96,9 +97,10 @@ class UserRolesController extends Controller
     {
         //dd($request);
         $this->validate($request, [
-            'role'  => 'required|unique:tbl_user_role'
+            'role' => 'required|unique:tbl_user_role',
+            'level' => 'required',
         ]);
-        
+
         try {
             $role = UserRoles::create([
                 'role' => $request->get('role'),
@@ -184,7 +186,6 @@ class UserRolesController extends Controller
                 'city' => $request->get('city'),
                 'reset_setting' => $request->get('reset_setting'),
 
-
                 'feedback_terminals_2' => $request->get('feedback_terminals_2'),
                 'question_list_2' => $request->get('question_list_2'),
                 'feedback_setting_2' => $request->get('feedback_setting_2'),
@@ -215,8 +216,8 @@ class UserRolesController extends Controller
                 'complain_chart_3' => $request->get('complain_chart_3'),
                 'notification_template_3' => $request->get('notification_template_3'),
                 'get_complain_setting_3' => $request->get('get_complain_setting_3'),
-                'complain_pop_up_3' => $request->get('complain_pop_up_3'),    
-                
+                'complain_pop_up_3' => $request->get('complain_pop_up_3'),
+
                 'feedback_terminals_4' => $request->get('feedback_terminals_4'),
                 'question_list_4' => $request->get('question_list_4'),
                 'feedback_setting_4' => $request->get('feedback_setting_4'),
@@ -232,7 +233,6 @@ class UserRolesController extends Controller
                 'notification_template_4' => $request->get('notification_template_4'),
                 'get_complain_setting_4' => $request->get('get_complain_setting_4'),
                 'complain_pop_up_4' => $request->get('complain_pop_up_4'),
-
 
                 'feedback_terminals_5' => $request->get('feedback_terminals_5'),
                 'question_list_5' => $request->get('question_list_5'),
@@ -269,11 +269,10 @@ class UserRolesController extends Controller
                 'get_user_report_5' => $request->get('get_user_report_5'),
                 'get_location_report_5' => $request->get('get_location_report_5'),
 
-
-                'dashboard_feedback_terminals_2'=> $request->get('dashboard_feedback_terminals_2'),
-                'dashboard_feedback_terminals_3'=> $request->get('dashboard_feedback_terminals_3'),
-                'dashboard_feedback_terminals_4'=> $request->get('dashboard_feedback_terminals_4'),
-                'dashboard_feedback_terminals_5'=> $request->get('dashboard_feedback_terminals_5'),
+                'dashboard_feedback_terminals_2' => $request->get('dashboard_feedback_terminals_2'),
+                'dashboard_feedback_terminals_3' => $request->get('dashboard_feedback_terminals_3'),
+                'dashboard_feedback_terminals_4' => $request->get('dashboard_feedback_terminals_4'),
+                'dashboard_feedback_terminals_5' => $request->get('dashboard_feedback_terminals_5'),
 
                 'dashboard_feedback_reason_2' => $request->get('dashboard_feedback_reason_2'),
                 'dashboard_feedback_reason_3' => $request->get('dashboard_feedback_reason_3'),
@@ -292,18 +291,16 @@ class UserRolesController extends Controller
                 'feedback_terminal_responses_5' => $request->get('feedback_terminal_responses_5'),
                 'reason_kpi_dashboard' => $request->get('reason_kpi_dashboard'),
 
-
-
-            ]);        
+            ]);
         } catch (Exception $e) {
             $request->session()->flash('message.level', 'danger');
             $request->session()->flash('message.content', $e->getMessage());
         }
 
         $request->session()->flash('message.level', 'success');
-        $request->session()->flash('message.content', __('message.role').' '.__('message.created').' '.__('message.successfully'));
+        $request->session()->flash('message.content', __('message.role') . ' ' . __('message.created') . ' ' . __('message.successfully'));
         return redirect()->route('user_roles.index');
-        
+
     }
 
     /**
@@ -326,9 +323,9 @@ class UserRolesController extends Controller
     public function edit($id)
     {
 
-        $role = UserRoles::find($id);     
+        $role = UserRoles::find($id);
 
-        return view('admin.user_roles.edit', compact('role'), $this->data);        
+        return view('admin.user_roles.edit', compact('role'), $this->data);
     }
 
     /**
@@ -341,7 +338,8 @@ class UserRolesController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'role'  => 'required|unique:tbl_user_role,role,'.$id,
+            'role' => 'required|unique:tbl_user_role,role,' . $id,
+            'level' => 'required',
         ]);
         try {
             $role = UserRoles::whereId($id)->update([
@@ -459,8 +457,8 @@ class UserRolesController extends Controller
                 'complain_chart_3' => $request->get('complain_chart_3'),
                 'notification_template_3' => $request->get('notification_template_3'),
                 'get_complain_setting_3' => $request->get('get_complain_setting_3'),
-                'complain_pop_up_3' => $request->get('complain_pop_up_3'),    
-                
+                'complain_pop_up_3' => $request->get('complain_pop_up_3'),
+
                 'feedback_terminals_4' => $request->get('feedback_terminals_4'),
                 'question_list_4' => $request->get('question_list_4'),
                 'feedback_setting_4' => $request->get('feedback_setting_4'),
@@ -476,7 +474,6 @@ class UserRolesController extends Controller
                 'notification_template_4' => $request->get('notification_template_4'),
                 'get_complain_setting_4' => $request->get('get_complain_setting_4'),
                 'complain_pop_up_4' => $request->get('complain_pop_up_4'),
-
 
                 'feedback_terminals_5' => $request->get('feedback_terminals_5'),
                 'question_list_5' => $request->get('question_list_5'),
@@ -513,10 +510,10 @@ class UserRolesController extends Controller
                 'get_user_report_5' => $request->get('get_user_report_5'),
                 'get_location_report_5' => $request->get('get_location_report_5'),
 
-                'dashboard_feedback_terminals_2'=> $request->get('dashboard_feedback_terminals_2'),
-                'dashboard_feedback_terminals_3'=> $request->get('dashboard_feedback_terminals_3'),
-                'dashboard_feedback_terminals_4'=> $request->get('dashboard_feedback_terminals_4'),
-                'dashboard_feedback_terminals_5'=> $request->get('dashboard_feedback_terminals_5'),
+                'dashboard_feedback_terminals_2' => $request->get('dashboard_feedback_terminals_2'),
+                'dashboard_feedback_terminals_3' => $request->get('dashboard_feedback_terminals_3'),
+                'dashboard_feedback_terminals_4' => $request->get('dashboard_feedback_terminals_4'),
+                'dashboard_feedback_terminals_5' => $request->get('dashboard_feedback_terminals_5'),
 
                 'dashboard_feedback_reason_2' => $request->get('dashboard_feedback_reason_2'),
                 'dashboard_feedback_reason_3' => $request->get('dashboard_feedback_reason_3'),
@@ -536,14 +533,14 @@ class UserRolesController extends Controller
                 'feedback_terminal_responses_5' => $request->get('feedback_terminal_responses_5'),
                 'reason_kpi_dashboard' => $request->get('reason_kpi_dashboard'),
 
-            ]);        
+            ]);
         } catch (Exception $e) {
             $request->session()->flash('message.level', 'danger');
             $request->session()->flash('message.content', $e->getMessage());
         }
 
         $request->session()->flash('message.level', 'success');
-        $request->session()->flash('message.content', __('message.role').' '.__('message.updated').' '.__('message.successfully'));
+        $request->session()->flash('message.content', __('message.role') . ' ' . __('message.updated') . ' ' . __('message.successfully'));
         return redirect()->route('user_roles.index');
     }
 
@@ -553,59 +550,58 @@ class UserRolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         try {
-            $role = UserRoles::destroy($id);   
+            $role = UserRoles::destroy($id);
             // $request->session()->flash('message.level', 'success');
-            // $request->session()->flash('message.content', 'Role Deleted successfully!');   
+            // $request->session()->flash('message.content', 'Role Deleted successfully!');
 
             return response()->json([
-                'message'   =>  __('message.role').' '.__('message.deleted').' '.__('message.successfully'),
-                'success'   =>  true
-            ],200);
+                'message' => __('message.role') . ' ' . __('message.deleted') . ' ' . __('message.successfully'),
+                'success' => true,
+            ], 200);
         } catch (Exception $e) {
             // $request->session()->flash('message.level', 'danger');
             // $request->session()->flash('message.content', $e->getMessage());
 
             return response()->json([
-                'message'   =>  'Internal server error!',
-                'success'   =>  false
-            ],200);
+                'message' => 'Internal server error!',
+                'success' => false,
+            ], 200);
         }
     }
     public function user_status(Request $request)
     {
         try {
-             $id = $request->get('id');
-            DB::table('tbl_user_role')->where('id',$id)->update([
-                'status' => $request->get('status')
+            $id = $request->get('id');
+            DB::table('tbl_user_role')->where('id', $id)->update([
+                'status' => $request->get('status'),
             ]);
-            if($request->get('status') == 1){
-            // $request->session()->flash('message.level', 'success');
-            // $request->session()->flash('message.content', 'User Role activated successfully!');
-            return response()->json([
-                'message' => __('message.role').' '.__('message.activated').' '.__('message.successfully'),
-                'success' => true
-            ],200);
-            
-            }else{
+            if ($request->get('status') == 1) {
+                // $request->session()->flash('message.level', 'success');
+                // $request->session()->flash('message.content', 'User Role activated successfully!');
+                return response()->json([
+                    'message' => __('message.role') . ' ' . __('message.activated') . ' ' . __('message.successfully'),
+                    'success' => true,
+                ], 200);
+
+            } else {
                 // $request->session()->flash('message.level', 'success');
                 // $request->session()->flash('message.content', 'User Role inavctive successfully!');
                 return response()->json([
-                    'message' => __('message.role').' '.__('message.in_active').' '.__('message.successfully'),
-                    'success' => true
-                ],200);
+                    'message' => __('message.role') . ' ' . __('message.in_active') . ' ' . __('message.successfully'),
+                    'success' => true,
+                ], 200);
             }
-            
 
         } catch (Exception $e) {
             // $request->session()->flash('message.level', 'danger');
             // $request->session()->flash('message.content', $e->getMessage());
             return response()->json([
-                'message'   =>  'Internal server error!',
-                'success'   =>  false
-            ],500);
+                'message' => 'Internal server error!',
+                'success' => false,
+            ], 500);
         }
     }
 }

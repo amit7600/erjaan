@@ -31712,10 +31712,10 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\erjaan_language\resources\laravel\js\app.js */"./resources/laravel/js/app.js");
-__webpack_require__(/*! D:\erjaan_language\resources\gull\assets\styles\sass\themes\lite-purple.scss */"./resources/gull/assets/styles/sass/themes/lite-purple.scss");
-__webpack_require__(/*! D:\erjaan_language\resources\gull\assets\styles\sass\themes\lite-blue.scss */"./resources/gull/assets/styles/sass/themes/lite-blue.scss");
-module.exports = __webpack_require__(/*! D:\erjaan_language\resources\gull\assets\styles\sass\themes\dark-purple.scss */"./resources/gull/assets/styles/sass/themes/dark-purple.scss");
+__webpack_require__(/*! D:\erjaan latest\resources\laravel\js\app.js */"./resources/laravel/js/app.js");
+__webpack_require__(/*! D:\erjaan latest\resources\gull\assets\styles\sass\themes\lite-purple.scss */"./resources/gull/assets/styles/sass/themes/lite-purple.scss");
+__webpack_require__(/*! D:\erjaan latest\resources\gull\assets\styles\sass\themes\lite-blue.scss */"./resources/gull/assets/styles/sass/themes/lite-blue.scss");
+module.exports = __webpack_require__(/*! D:\erjaan latest\resources\gull\assets\styles\sass\themes\dark-purple.scss */"./resources/gull/assets/styles/sass/themes/dark-purple.scss");
 
 
 /***/ })

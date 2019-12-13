@@ -86,7 +86,7 @@ class UserController extends Controller {
                 $image = $row->user_image;
                 $image = !empty($image) ? $image : "";
                 if (!file_exists($image)) {
-                    $image = "public/uploads/nophoto.png";
+                    $image = "uploads/nophoto.png";
                 }
                 $image = $base_path . $image;
                 $img_tag = '<img src="' . $image . '" alt="" width="80" height="80"/>';

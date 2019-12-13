@@ -20,7 +20,10 @@ $id = '';
     <div class="col-lg-12 mb-3">
         {!! Form::open(['route' => 'user_roles.store', 'files' => true]) !!}
         @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <ul>
                 @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>

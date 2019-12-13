@@ -547,6 +547,21 @@ body.arabic_lang input[type="checkbox"] + label {
     -webkit-animation: zoom-in-out 1s linear 0s infinite normal;
     animation: zoom-in-out 1s linear 0s infinite normal;
 }
+
+.complain_form.modal.show .modal-dialog {
+    max-width: 90%;
+    direction: rtl;
+}
+
+.complain_form.modal.show .modal-dialog .modal-content {
+    height: 90vh;
+}
+
+.model_question .modal-body .form-group label,
+.model_question .modal-body .form-group .form-control {
+    font-size: 20px;
+}
+
 @-webkit-keyframes zoom-in-out {
     0% {
         -webkit-transform: scale(0.9);
