@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2373e9e03dad5c3a953c58930a291cdc",
+    "content-hash": "656047bea815756766cc0b2732caeaf2",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -276,6 +276,58 @@
                 "validator"
             ],
             "time": "2019-06-23T10:14:27+00:00"
+        },
+        {
+            "name": "elibyy/tcpdf-laravel",
+            "version": "5.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elibyy/tcpdf-laravel.git",
+                "reference": "9fdd5e7594e1fd3e505c27206cffa6dde557f89c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elibyy/tcpdf-laravel/zipball/9fdd5e7594e1fd3e505c27206cffa6dde557f89c",
+                "reference": "9fdd5e7594e1fd3e505c27206cffa6dde557f89c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.8.*",
+                "tecnickcom/tcpdf": "6.2.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elibyy\\TCPDF\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "PDF": "Elibyy\\TCPDF\\Facades\\TCPDF"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elibyy\\TCPDF\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "eli y",
+                    "email": "elibyy@gmail.com"
+                }
+            ],
+            "description": "tcpdf support for laravel 5",
+            "keywords": [
+                "TCPDF",
+                "laravel",
+                "pdf"
+            ],
+            "time": "2019-03-03T09:31:51+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -1866,6 +1918,269 @@
             "time": "2018-07-19T23:38:55+00:00"
         },
         {
+            "name": "setasign/fpdf",
+            "version": "1.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/FPDF.git",
+                "reference": "d77904018090c17dc9f3ab6e944679a7a47e710a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/d77904018090c17dc9f3ab6e944679a7a47e710a",
+                "reference": "d77904018090c17dc9f3ab6e944679a7a47e710a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "fpdf.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Olivier Plathey",
+                    "email": "oliver@fpdf.org",
+                    "homepage": "http://fpdf.org/"
+                }
+            ],
+            "description": "FPDF is a PHP class which allows to generate PDF files with pure PHP. F from FPDF stands for Free: you may use it for any kind of usage and modify it to suit your needs.",
+            "homepage": "http://www.fpdf.org",
+            "keywords": [
+                "fpdf",
+                "pdf"
+            ],
+            "time": "2019-12-08T10:32:10+00:00"
+        },
+        {
+            "name": "setasign/fpdi",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/FPDI.git",
+                "reference": "3c266002f8044f61b17329f7cd702d44d73f0f7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/FPDI/zipball/3c266002f8044f61b17329f7cd702d44d73f0f7f",
+                "reference": "3c266002f8044f61b17329f7cd702d44d73f0f7f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zlib": "*",
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.7",
+                "setasign/fpdf": "~1.8",
+                "setasign/tfpdf": "1.25",
+                "tecnickcom/tcpdf": "~6.2"
+            },
+            "suggest": {
+                "setasign/fpdf": "FPDI will extend this class but as it is also possible to use TCPDF or tFPDF as an alternative. There's no fixed dependency configured.",
+                "setasign/fpdi-fpdf": "Use this package to automatically evaluate dependencies to FPDF.",
+                "setasign/fpdi-tcpdf": "Use this package to automatically evaluate dependencies to TCPDF.",
+                "setasign/fpdi-tfpdf": "Use this package to automatically evaluate dependencies to tFPDF."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "setasign\\Fpdi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Slabon",
+                    "email": "jan.slabon@setasign.com",
+                    "homepage": "https://www.setasign.com"
+                },
+                {
+                    "name": "Maximilian Kresse",
+                    "email": "maximilian.kresse@setasign.com",
+                    "homepage": "https://www.setasign.com"
+                }
+            ],
+            "description": "FPDI is a collection of PHP classes facilitating developers to read pages from existing PDF documents and use them as templates in FPDF. Because it is also possible to use FPDI with TCPDF, there are no fixed dependencies defined. Please see suggestions for packages which evaluates the dependencies automatically.",
+            "homepage": "https://www.setasign.com/fpdi",
+            "keywords": [
+                "fpdf",
+                "fpdi",
+                "pdf"
+            ],
+            "time": "2019-01-30T14:11:19+00:00"
+        },
+        {
+            "name": "setasign/fpdi-fpdf",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/FPDI-FPDF.git",
+                "reference": "39d8fe065ef27816e78ceebf87719bebe6abdd73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/FPDI-FPDF/zipball/39d8fe065ef27816e78ceebf87719bebe6abdd73",
+                "reference": "39d8fe065ef27816e78ceebf87719bebe6abdd73",
+                "shasum": ""
+            },
+            "require": {
+                "setasign/fpdf": "^1.8",
+                "setasign/fpdi": "^2.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Slabon",
+                    "email": "jan.slabon@setasign.com",
+                    "homepage": "https://www.setasign.com"
+                }
+            ],
+            "description": "Kind of metadata package for dependencies of the latest versions of FPDI and FPDF.",
+            "homepage": "https://www.setasign.com/fpdi",
+            "keywords": [
+                "fpdf",
+                "fpdi",
+                "pdf"
+            ],
+            "time": "2017-10-12T14:26:38+00:00"
+        },
+        {
+            "name": "setasign/fpdi-tcpdf",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/FPDI-TCPDF.git",
+                "reference": "326df0f31ef0fab8f1e6559833b21a6275ae15bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/FPDI-TCPDF/zipball/326df0f31ef0fab8f1e6559833b21a6275ae15bc",
+                "reference": "326df0f31ef0fab8f1e6559833b21a6275ae15bc",
+                "shasum": ""
+            },
+            "require": {
+                "setasign/fpdi": "^2.0",
+                "tecnickcom/tcpdf": "^6.2"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Slabon",
+                    "email": "jan.slabon@setasign.com",
+                    "homepage": "https://www.setasign.com"
+                }
+            ],
+            "description": "Kind of metadata package for dependencies of the latest versions of FPDI and TCPDF.",
+            "homepage": "https://www.setasign.com/fpdi",
+            "keywords": [
+                "TCPDF",
+                "fpdi",
+                "pdf"
+            ],
+            "time": "2017-10-12T14:31:02+00:00"
+        },
+        {
+            "name": "setasign/fpdi-tfpdf",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/FPDI-tFPDF.git",
+                "reference": "2e7d7b9d0aa1462dc89cbba4e33cc1364b920008"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/FPDI-tFPDF/zipball/2e7d7b9d0aa1462dc89cbba4e33cc1364b920008",
+                "reference": "2e7d7b9d0aa1462dc89cbba4e33cc1364b920008",
+                "shasum": ""
+            },
+            "require": {
+                "setasign/fpdi": "^2.2",
+                "setasign/tfpdf": "^1.25"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Slabon",
+                    "email": "jan.slabon@setasign.com",
+                    "homepage": "https://www.setasign.com"
+                }
+            ],
+            "description": "Kind of metadata package for dependencies of the latest versions of FPDI and tFPDF.",
+            "homepage": "https://www.setasign.com/fpdi",
+            "keywords": [
+                "fpdi",
+                "pdf",
+                "tfpdf"
+            ],
+            "time": "2019-01-30T14:40:54+00:00"
+        },
+        {
+            "name": "setasign/tfpdf",
+            "version": "1.25",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/tFPDF.git",
+                "reference": "f5fa74ebca027c685de70b48ee9212ae30e9f0eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/tFPDF/zipball/f5fa74ebca027c685de70b48ee9212ae30e9f0eb",
+                "reference": "f5fa74ebca027c685de70b48ee9212ae30e9f0eb",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "tfpdf.php",
+                    "font/unifont/ttfonts.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Olivier Plathey",
+                    "email": "oliver@fpdf.org",
+                    "homepage": "http://fpdf.org/"
+                },
+                {
+                    "name": "Ian Back",
+                    "email": "ian@bpm1.com"
+                }
+            ],
+            "description": "This class is a modified version of FPDF that adds UTF-8 support. It is based on FPDF 1.7.",
+            "homepage": "http://fpdf.org/en/script/script92.php",
+            "keywords": [
+                "fpdf",
+                "pdf",
+                "tfpdf",
+                "unicode"
+            ],
+            "time": "2018-09-05T15:36:21+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.2.1",
             "source": {
@@ -2290,31 +2605,31 @@
         },
         {
             "name": "symfony/http-foundation",
-            "version": "v4.3.2",
+            "version": "v4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "e1b507fcfa4e87d192281774b5ecd4265370180d"
+                "reference": "fcae1cff5b57b2a9c3aabefeb1527678705ddb62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/e1b507fcfa4e87d192281774b5ecd4265370180d",
-                "reference": "e1b507fcfa4e87d192281774b5ecd4265370180d",
+                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/fcae1cff5b57b2a9c3aabefeb1527678705ddb62",
+                "reference": "fcae1cff5b57b2a9c3aabefeb1527678705ddb62",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.1.3",
-                "symfony/mime": "^4.3",
+                "symfony/mime": "^4.3|^5.0",
                 "symfony/polyfill-mbstring": "~1.1"
             },
             "require-dev": {
                 "predis/predis": "~1.0",
-                "symfony/expression-language": "~3.4|~4.0"
+                "symfony/expression-language": "^3.4|^4.0|^5.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.3-dev"
+                    "dev-master": "4.4-dev"
                 }
             },
             "autoload": {
@@ -2341,7 +2656,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2019-06-26T09:25:00+00:00"
+            "time": "2019-12-19T15:57:49+00:00"
         },
         {
             "name": "symfony/http-kernel",
@@ -2437,16 +2752,16 @@
         },
         {
             "name": "symfony/mime",
-            "version": "v4.3.2",
+            "version": "v4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mime.git",
-                "reference": "ec2c5565de60e03f33d4296a655e3273f0ad1f8b"
+                "reference": "010cc488e56cafe5f7494dea70aea93100c234df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mime/zipball/ec2c5565de60e03f33d4296a655e3273f0ad1f8b",
-                "reference": "ec2c5565de60e03f33d4296a655e3273f0ad1f8b",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/010cc488e56cafe5f7494dea70aea93100c234df",
+                "reference": "010cc488e56cafe5f7494dea70aea93100c234df",
                 "shasum": ""
             },
             "require": {
@@ -2454,14 +2769,17 @@
                 "symfony/polyfill-intl-idn": "^1.10",
                 "symfony/polyfill-mbstring": "^1.0"
             },
+            "conflict": {
+                "symfony/mailer": "<4.4"
+            },
             "require-dev": {
-                "egulias/email-validator": "^2.0",
-                "symfony/dependency-injection": "~3.4|^4.1"
+                "egulias/email-validator": "^2.1.10",
+                "symfony/dependency-injection": "^3.4|^4.1|^5.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.3-dev"
+                    "dev-master": "4.4-dev"
                 }
             },
             "autoload": {
@@ -2492,7 +2810,7 @@
                 "mime",
                 "mime-type"
             ],
-            "time": "2019-06-04T09:22:54+00:00"
+            "time": "2019-11-30T08:27:26+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2613,16 +2931,16 @@
         },
         {
             "name": "symfony/polyfill-intl-idn",
-            "version": "v1.11.0",
+            "version": "v1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-idn.git",
-                "reference": "c766e95bec706cdd89903b1eda8afab7d7a6b7af"
+                "reference": "6f9c239e61e1b0c9229a28ff89a812dc449c3d46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/c766e95bec706cdd89903b1eda8afab7d7a6b7af",
-                "reference": "c766e95bec706cdd89903b1eda8afab7d7a6b7af",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/6f9c239e61e1b0c9229a28ff89a812dc449c3d46",
+                "reference": "6f9c239e61e1b0c9229a28ff89a812dc449c3d46",
                 "shasum": ""
             },
             "require": {
@@ -2636,7 +2954,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.9-dev"
+                    "dev-master": "1.13-dev"
                 }
             },
             "autoload": {
@@ -2653,12 +2971,12 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                },
-                {
                     "name": "Laurent Bassin",
                     "email": "laurent@bassin.info"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony polyfill for intl's idn_to_ascii and idn_to_utf8 functions",
@@ -2671,20 +2989,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2019-03-04T13:44:35+00:00"
+            "time": "2019-11-27T13:56:44+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.11.0",
+            "version": "v1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "fe5e94c604826c35a32fa832f35bd036b6799609"
+                "reference": "7b4aab9743c30be783b73de055d24a39cf4b954f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fe5e94c604826c35a32fa832f35bd036b6799609",
-                "reference": "fe5e94c604826c35a32fa832f35bd036b6799609",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7b4aab9743c30be783b73de055d24a39cf4b954f",
+                "reference": "7b4aab9743c30be783b73de055d24a39cf4b954f",
                 "shasum": ""
             },
             "require": {
@@ -2696,7 +3014,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11-dev"
+                    "dev-master": "1.13-dev"
                 }
             },
             "autoload": {
@@ -2730,20 +3048,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2019-02-06T07:57:58+00:00"
+            "time": "2019-11-27T14:18:11+00:00"
         },
         {
             "name": "symfony/polyfill-php72",
-            "version": "v1.11.0",
+            "version": "v1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php72.git",
-                "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c"
+                "reference": "66fea50f6cb37a35eea048d75a7d99a45b586038"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/ab50dcf166d5f577978419edd37aa2bb8eabce0c",
-                "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c",
+                "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/66fea50f6cb37a35eea048d75a7d99a45b586038",
+                "reference": "66fea50f6cb37a35eea048d75a7d99a45b586038",
                 "shasum": ""
             },
             "require": {
@@ -2752,7 +3070,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11-dev"
+                    "dev-master": "1.13-dev"
                 }
             },
             "autoload": {
@@ -2785,7 +3103,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2019-02-06T07:57:58+00:00"
+            "time": "2019-11-27T13:56:44+00:00"
         },
         {
             "name": "symfony/polyfill-php73",
@@ -3236,6 +3554,68 @@
                 "dump"
             ],
             "time": "2019-06-17T17:37:00+00:00"
+        },
+        {
+            "name": "tecnickcom/tcpdf",
+            "version": "6.2.26",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/TCPDF.git",
+                "reference": "367241059ca166e3a76490f4448c284e0a161f15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/367241059ca166e3a76490f4448c284e0a161f15",
+                "reference": "367241059ca166e3a76490f4448c284e0a161f15",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "config",
+                    "include",
+                    "tcpdf.php",
+                    "tcpdf_parser.php",
+                    "tcpdf_import.php",
+                    "tcpdf_barcodes_1d.php",
+                    "tcpdf_barcodes_2d.php",
+                    "include/tcpdf_colors.php",
+                    "include/tcpdf_filters.php",
+                    "include/tcpdf_font_data.php",
+                    "include/tcpdf_fonts.php",
+                    "include/tcpdf_images.php",
+                    "include/tcpdf_static.php",
+                    "include/barcodes/datamatrix.php",
+                    "include/barcodes/pdf417.php",
+                    "include/barcodes/qrcode.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "TCPDF is a PHP class for generating PDF documents and barcodes.",
+            "homepage": "http://www.tcpdf.org/",
+            "keywords": [
+                "PDFD32000-2008",
+                "TCPDF",
+                "barcodes",
+                "datamatrix",
+                "pdf",
+                "pdf417",
+                "qrcode"
+            ],
+            "time": "2018-10-16T17:24:05+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
