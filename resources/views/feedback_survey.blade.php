@@ -17,8 +17,6 @@
   </style>
   <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet">
 
-  <link href="{{asset('admin_css/assets/star-rating/star-rating.css')}}" rel="stylesheet">
-  <link href="{{asset('admin_css/assets/front/css/font-awesome.css')}}" rel="stylesheet">
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'
     integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
   <!-- this is for star rating -->
@@ -27,20 +25,10 @@
 </head>
 
 <body id="myFullscreen" class="only_question_1" onload="sequence()">
-  <?php 
-  //$user_ag = $_SERVER['HTTP_USER_AGENT'];
-  //if(preg_match('/(Mobile|Android|Tablet|GoBrowser|[0-9]x[0-9]*|uZardWeb\/|Mini|Doris\/|Skyfire\/|iPhone|Fennec\/|Maemo|Iris\/|CLDC\-|Mobi\/)/uis',$user_ag)){  ?>
-  {{--<div class="overlay_img" style="background-image: url('{{$base_path}}{{$selected_feedback_question ?     $selected_feedback_question->question_form_background_mobile : ''}}');
-  background-color: {{$selected_feedback_question ? $selected_feedback_question->question_background_color : ''}} ;
-  background-size:cover; background-repeat: no-repeat; background-attachment: fixed; background-position: center; " >
-  </div>--}}
-  <?php     //}else{ ?>
+
   <div class="overlay_img"
     style="background-image: url('{{$base_path}}{{$selected_feedback_question ?     $selected_feedback_question->question_form_background : ''}}'); background-color: {{$selected_feedback_question ? $selected_feedback_question->question_background_color : ''}} ; background-size:cover;   background-repeat: no-repeat; background-attachment: fixed;  background-position: center; ">
   </div>
-  <?php     // }
-
-  ?>
   <div class="inner_body">
     <div class="inner_bg">
       <div class="logo-img">
@@ -244,6 +232,7 @@
             </div>
         </div>
       </div>
+
       <div class="modal fade model_question complain_form" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -283,14 +272,15 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">{{__('message.thank_you_message')}}</h4>
+              {{-- <h4 class="modal-title">{{__('message.thank_you_message')}}</h4> --}}
               <button type="button" class="close" data-dismiss="modal" id="close_btn" aria-label="Close"><span
                   aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
-              {!! $selected_feedback_question ? $selected_feedback_question->thank_you_message : 'Thanks for feedback!'
-              !!}
+              <h1>{!! $selected_feedback_question ? $selected_feedback_question->thank_you_message : 'Thanks for
+                feedback!'
+                !!}</h1>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -391,7 +381,7 @@
             setTimeout(function() {
               window.scrollTo(0,0)
               location.reload();
-            }, 2000);
+            }, 1000);
           },
         });
 
@@ -454,7 +444,7 @@
                 setTimeout(function() {
                   window.scrollTo(0,0)
                   location.reload();
-                }, 2000);
+                }, 1000);
 
             }
 
@@ -529,7 +519,7 @@
                 setTimeout(function() {
                   window.scrollTo(0,0)
                   location.reload();
-                }, 2000);
+                }, 1000);
             }
         }else{
             $.ajax({
@@ -553,33 +543,6 @@
         $('#complainModel').modal('show');
     }
 
-    function sendSurveyPopup () {
-      var url = "{{ route('feedBackRatings') }}"
-        var comment_id = $('#comment_id').val()
-        var comment = $('#'+comment_id).val()
-
-        if(comment == ''){
-            $('p').css('color', 'red').text('This field is required!');
-            $('#comment').addClass('alert-danger');
-            return false;
-        }
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: {
-            "_token": "{{ csrf_token() }}",
-            'comment' : comment
-            },
-          success: function(resp){
-            $('#thank_you').modal('toggle');
-            setTimeout(function() {
-              window.scrollTo(0,0)
-              location.reload();
-            }, 2000);
-          },
-        });
-        $('#myModal').modal('hide');
-    }
     function sendSurveyPopup2 () {
       var url = "{{ route('feedBackComplaints') }}"
       var name = $('#name').val()
@@ -587,22 +550,22 @@
         var number = $('#number').val()
         var comment = $('#commentd').val()
 
-        if(comment == ''){
-            $('p').css('color', 'red').text('This field is required!');
-            $('#commentd').addClass('alert-danger');
-            return false;
-        }
-        if (email != '') {
-          var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+        // if(comment == ''){
+        //     $('p').css('color', 'red').text('This field is required!');
+        //     $('#commentd').addClass('alert-danger');
+        //     return false;
+        // }
+        // if (email != '') {
+        //   var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
-          if (reg.test(email) == false)
-          {
-            $('#email_p').css('color', 'red').text('Invalid Email Address!');
-            $('#email').addClass('alert-danger');
-              return false;
-          }
+        //   if (reg.test(email) == false)
+        //   {
+        //     $('#email_p').css('color', 'red').text('Invalid Email Address!');
+        //     $('#email').addClass('alert-danger');
+        //       return false;
+        //   }
 
-        }
+        // }
         $.ajax({
           type: "POST",
           url: url,
@@ -618,7 +581,7 @@
             setTimeout(function() {
               window.scrollTo(0,0)
               location.reload();
-            }, 2000);
+            }, 1000);
           },
         });
         $('#complainModel').modal('hide');
